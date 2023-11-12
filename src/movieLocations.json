@@ -1,0 +1,28 @@
+[
+    {
+      "title": "Inception",
+      "locations": [
+        { "name": "Pont de Bir-Hakeim", "lat": 48.85565, "lng": 2.287592 },
+        { "name": "Bir-Hakeim Bridge", "lat": 48.8566, "lng": 2.35149 },
+        { "name": "University of Paris, Sorbonne", "lat": 48.849918, "lng": 2.344219 }
+      ]
+    },
+    {
+      "title": "Midnight in Paris",
+      "locations": [
+        { "name": "Church of Saint-Étienne du Mont", "lat": 48.846222, "lng": 2.346414 },
+        { "name": "Musée Rodin", "lat": 48.855911, "lng": 2.315358 },
+        { "name": "Palais Garnier", "lat": 48.87194, "lng": 2.3315 },
+        { "name": "Tour de Eiffeil", "lat": 48.858093, "lng": 2.294694 }
+      ]
+    },
+    {
+      "title": "Amélie",
+      "locations": [
+        { "name": "Canal Saint-Martin", "lat": 48.871531, "lng": 2.366656 },
+        { "name": "Sacré-Cœur Basilica", "lat": 48.886805, "lng": 2.343015 },
+        { "name": "Café des 2 Moulins", "lat": 48.884038, "lng": 2.333387 }
+      ]
+    }
+  ]
+  
