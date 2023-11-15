@@ -2,10 +2,10 @@ import React from "react";
 
 const Navbar = ({ onCitySelect }) => {
   const cities = [
-    { name: "Paris", coordinates: [48.8588443, 2.2943506] },
-    { name: "Budapest", coordinates: [47.497912, 19.040235] },
-    { name: "London", coordinates: [51.5074, -0.1278] },
-    { name: "New York", coordinates: [40.7128, -74.0060] },
+    { name: "Paris", coordinates: [2.2943506, 48.8588443] },
+    { name: "Budapest", coordinates: [19.040235, 47.497912] },
+    { name: "London", coordinates: [-0.1278, 51.5074] },
+    { name: "New York", coordinates: [-74.0060, 40.7128] },
   ];
 
   const handleCityClick = (coordinates) => {
@@ -44,4 +44,3 @@ const Navbar = ({ onCitySelect }) => {
 };
 
 export default Navbar;
-

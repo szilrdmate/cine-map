@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../movieLocations.json";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const MapComponent = () => {
+const MapComponent = ({ coordinates, openMovieCard }) => {
+  // Create state to hold movie details for the MovieCard
+  const [movieDetails, setMovieDetails] = useState(null);
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [2.294694, 48.858093],
+      style: "mapbox://styles/mapbox/dark-v11",
+      center: coordinates,
       zoom: 16.5,
       pitch: 45,
       bearing: -17.6,
@@ -44,10 +47,11 @@ const MapComponent = () => {
             15.05,
             ["get", "min_height"],
           ],
-          "fill-extrusion-opacity": 0.8,
+          "fill-extrusion-opacity": 0.7,
           "fill-extrusion-vertical-gradient": true,
         },
       });
+
       movieLocations.forEach((movie) => {
         movie.locations.forEach((location) => {
           // Create a marker element
@@ -67,15 +71,20 @@ const MapComponent = () => {
           // Add a zoom event listener to resize markers
           map.on("zoom", () => {
             const zoom = map.getZoom();
-            const newSize = zoom * 0.3 // Adjust the size based on zoom level
+            const newSize = zoom * 0.3; // Adjust the size based on zoom level
             markerEl.style.fontSize = `${newSize}em`;
+          });
+
+          // Add a click event listener to open the MovieCard when a pin is clicked
+          markerEl.addEventListener("click", () => {
+            openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });
           });
         });
       });
     });
 
     return () => map.remove();
-  }, []);
+  }, [coordinates, openMovieCard]);
 
   return <div id="map" style={{ width: "100%", height: "100vh" }} />;
 };
