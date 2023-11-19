@@ -41,17 +41,17 @@ CineMap provides an interactive map where users can discover movie filming locat
 
 Explore movie locations on the map, click on pins to view details, and save your favorite locations.
 
-# Dependencies
+## Dependencies
 
 - React
 - React Router
 - TailwindCSS
 - Mapbox
 
-# Contributing
+## Contributing
 
 Feel free to contribute by opening issues or pull requests. Follow the guidelines in the CONTRIBUTING.md file.
 
-# License
+## License
 
 This project is licensed under the MIT License.
