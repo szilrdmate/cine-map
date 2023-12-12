@@ -16,7 +16,7 @@ const Navbar = ({ onCitySelect }) => {
     <div className="bg-white p-5 flex justify-between items-center rounded-b-2xl shadow-2xl shadow-slate-950 absolute z-50 w-screen px-50">
       <div className="logo">
         {/* Add your logo image here */}
-        <img src="./src/public/logo.svg" alt="App Logo" className="h-10" />
+        <img src="/public/logo.svg" alt="App Logo" className="h-10" />
       </div>
       <div className="space-x-4">
         {cities.map((city) => (
