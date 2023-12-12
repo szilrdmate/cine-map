@@ -18,47 +18,15 @@ const MapComponent = ({ coordinates, openMovieCard }) => {
       pitch: 45,
       bearing: -17.6,
     });
-
-    map.on("load", () => {
-      map.addLayer({
-        id: "3d-buildings",
-        source: "composite",
-        "source-layer": "building",
-        filter: ["==", "extrude", "true"],
-        type: "fill-extrusion",
-        minzoom: 15,
-        paint: {
-          "fill-extrusion-color": "#808080",
-          "fill-extrusion-height": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            15,
-            0,
-            15.05,
-            ["get", "height"],
-          ],
-          "fill-extrusion-base": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            15,
-            0,
-            15.05,
-            ["get", "min_height"],
-          ],
-          "fill-extrusion-opacity": 0.7,
-          "fill-extrusion-vertical-gradient": true,
-        },
-      });
-
+  
+    map.on('load', () => {
       movieLocations.forEach((movie) => {
         movie.locations.forEach((location) => {
           // Create a marker element
-          const markerEl = document.createElement("div");
-          markerEl.textContent = "📍"; // iOS pin emoji
-          markerEl.style.fontSize = "2.5em"; // Size of the emoji
-
+          const markerEl = document.createElement('div');
+          markerEl.textContent = '📍'; // iOS pin emoji
+          markerEl.style.fontSize = '2.5em'; // Size of the emoji
+  
           // Create a marker using the custom element
           const marker = new mapboxgl.Marker(markerEl)
             .setLngLat([location.lng, location.lat])
@@ -67,24 +35,25 @@ const MapComponent = ({ coordinates, openMovieCard }) => {
                 .setHTML(`<h3 style="color: black;">${location.name}</h3>`) // Set font color to black
             )
             .addTo(map);
-
+  
           // Add a zoom event listener to resize markers
-          map.on("zoom", () => {
+          map.on('zoom', () => {
             const zoom = map.getZoom();
             const newSize = zoom * 0.3; // Adjust the size based on zoom level
             markerEl.style.fontSize = `${newSize}em`;
           });
-
+  
           // Add a click event listener to open the MovieCard when a pin is clicked
-          markerEl.addEventListener("click", () => {
+          markerEl.addEventListener('click', () => {
             openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });
           });
         });
       });
     });
-
+  
     return () => map.remove();
   }, [coordinates, openMovieCard]);
+  
 
   return <div id="map" style={{ width: "100%", height: "100vh" }} />;
 };
