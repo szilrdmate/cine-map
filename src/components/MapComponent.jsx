@@ -36,13 +36,6 @@ const MapComponent = ({ coordinates, openMovieCard }) => {
             )
             .addTo(map);
   
-          // Add a zoom event listener to resize markers
-          map.on('zoom', () => {
-            const zoom = map.getZoom();
-            const newSize = zoom * 0.3; // Adjust the size based on zoom level
-            markerEl.style.fontSize = `${newSize}em`;
-          });
-  
           // Add a click event listener to open the MovieCard when a pin is clicked
           markerEl.addEventListener('click', () => {
             openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });

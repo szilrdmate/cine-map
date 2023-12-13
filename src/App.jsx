@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import MapComponent from "./components/MapComponent";
-import Footer from "./components/Footer";
 import MovieCard from "./components/MovieCard";
 
 function App() {
@@ -54,10 +53,6 @@ function App() {
           onClose={closeMovieCard}
         />
       )}
-      <Footer
-        favoriteMovies={favoriteMovies}
-        onSaveFavorite={addFavoriteMovie}
-      />
     </div>
   );
 }
