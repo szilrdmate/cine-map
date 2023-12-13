@@ -1,4 +1,4 @@
-# Crypto Decius
+# CineMap
 
 Welcome to CineMap, an interactive Map appliacation built for movie enthusiasts. Explore your favorite movie's location, get insights, and explore the world.
 
