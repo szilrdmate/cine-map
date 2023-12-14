@@ -30,8 +30,6 @@ const MapComponent = ({ city }) => {
       map.setConfigProperty('basemap', "showPointOfInterestLabels", false)
       map.setConfigProperty('basemap', "showTransitLabels", false)
       
-    
-
       map.addLayer({
         'id': '3d-buildings',
         'source': 'composite',
