@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../utils/movieLocations.json";
@@ -7,43 +7,38 @@ import cityCoordinates from "../utils/cities";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = ({ city }) => {
+  const mapContainerRef = useRef(null); // Create a ref for the map container
+  const mapRef = useRef(null)
+
   useEffect(() => {
+    if (!mapRef.current) {
+      // Initialize the map if it doesn't exist
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        // ... other map options ...
+      });
+    }
     if (!cityCoordinates[city]) return;
 
     const { lat, lng } = cityCoordinates[city];
+
+    // Initialize the map
     const map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/standard-beta", // You can use other styles that support 3D buildings
+      container: mapContainerRef.current,
+      style: "mapbox://styles/mapbox/standard-beta",
       center: [lng, lat],
       zoom: 12,
-      pitch: 62, // Set pitch for 3D effect
-      bearing: -20, // Optional: Adjust the bearing for the initial map load
-      hash: true,
+      pitch: 62,
+      bearing: -20,
     });
   
     map.on('style.load', () => {
-      // Add the 3D buildings layer
 
       map.setConfigProperty("basemap", "lightPreset", "dusk");
       map.setConfigProperty('basemap', "showPlaceLabels", false)
       map.setConfigProperty('basemap', "showRoadLabels", false)
       map.setConfigProperty('basemap', "showPointOfInterestLabels", false)
       map.setConfigProperty('basemap', "showTransitLabels", false)
-      
-      map.addLayer({
-        'id': '3d-buildings',
-        'source': 'composite',
-        'source-layer': 'building',
-        'filter': ['==', 'extrude', 'true'],
-        'type': 'fill-extrusion',
-        'minzoom': 15,
-        'paint': {
-          'fill-extrusion-color': '#aaa',
-          'fill-extrusion-height': ["get", "height"],
-          'fill-extrusion-base': ["get", "min_height"],
-          'fill-extrusion-opacity': 0.6
-        }
-      });
 
       // Add markers and popups for movie locations
       movieLocations.forEach((movie) => {
@@ -59,19 +54,19 @@ const MapComponent = ({ city }) => {
                 .setHTML(`<h3 style="color: black;">${location.name}</h3>`)
             )
             .addTo(map);
-  
-          markerEl.addEventListener('click', () => {
-            // Implement the openMovieCard functionality
-            // openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });
-          });
         });
       });
     });
 
-    return () => map.remove();
-  }, [city]);
+    return () => {
+      if (mapRef.current) {
+        map.remove();
+        mapRef.current = null;
+      }
+    };
+  }, [city]); // Depend on the city prop
 
-  return <div id="map" style={{ width: "100%", height: "100vh" }} />;
+  return <div ref={mapContainerRef} style={{ width: "100%", height: "100vh" }} />;
 };
 
 export default MapComponent;

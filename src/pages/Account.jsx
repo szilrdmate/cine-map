@@ -3,8 +3,8 @@ import React from "react";
 const Account = () => {
 
     return (
-        <div>
-            hello
+        <div className="flex justify-center items-center w-screen h-screen">
+            <h1>account</h1>
         </div>
     );
 }

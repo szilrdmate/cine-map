@@ -26,7 +26,7 @@ const Navbar = () => {
   const dropdownIcon = isDropdownOpen ? "▲" : "▼";
 
   return (
-    <nav className="bg-white shadow-2xl rounded-3xl absolute z-10 w-full h-24">
+    <nav className="bg-white shadow-2xl rounded-3xl absolute z-20 w-full h-24">
       <div className="px-8 w-full h-full flex justify-between items-center">
         <div className="flex space-x-7">
           <Link to="/" className="flex items-center">
@@ -34,10 +34,10 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center lg:space-x-8 space-x-2">
           <Link
             to="/"
-            className="text-2xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
+            className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
           >
             Home
           </Link>
@@ -45,7 +45,7 @@ const Navbar = () => {
           {/* Explore Dropdown */}
           <div className="relative flex items-center">
             <button
-              className="text-2xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
+              className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
               onMouseEnter={() => setIsDropdownOpen(true)}
               onMouseLeave={() => setIsDropdownOpen(false)}
             >
@@ -89,13 +89,13 @@ const Navbar = () => {
           {/* Other Links */}
           <Link
             to="/favorites"
-            className="text-2xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
+            className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
           >
             Favorites
           </Link>
           <Link
             to="/settings"
-            className="text-2xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
+            className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
           >
             Settings
           </Link>
@@ -105,15 +105,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           <Link
             to="/account"
-            className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950"
+            className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 hover:bg-teal-950 hover:text-white"
           >
             My Account
-          </Link>
-          <Link
-            to="/upgrade"
-            className="py-2 px-6 font-semibold text-white rounded-full transition duration-300 border-2 border-solid border-teal-950 bg-teal-950"
-          >
-            Upgrade Plan
           </Link>
         </div>
 
@@ -129,12 +123,12 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
-        <Link to="/" className="block py-2 px-4 text-sm hover:bg-gray-200">
+      <div className={`md:hidden ${isOpen ? "block bg-white rounded-3xl" : "hidden"}`}>
+        <Link to="/" className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200">
           Home
         </Link>
         {/* Mobile Explore Dropdown */}
-        <div className="block py-2 px-4 text-sm hover:bg-gray-200">
+        <div className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200">
           <button
             onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
           >
@@ -145,25 +139,25 @@ const Navbar = () => {
             <div className="py-1">
               <Link
                 to="/paris"
-                className="block py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
               >
                 Paris
               </Link>
               <Link
                 to="/london"
-                className="block py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
               >
                 London
               </Link>
               <Link
                 to="/budapest"
-                className="block py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
               >
                 Budapest
               </Link>
               <Link
                 to="/newyork"
-                className="block py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
               >
                 New York
               </Link>
@@ -172,19 +166,19 @@ const Navbar = () => {
         </div>
         <Link
           to="/favorites"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
+          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
         >
           Favorites
         </Link>
         <Link
           to="/settings"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
+          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
         >
           Settings
         </Link>
         <Link
           to="/account"
-          className="block py-2 px-4 text-sm hover:bg-gray-200"
+          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
         >
           Account
         </Link>

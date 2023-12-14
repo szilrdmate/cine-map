@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
 import Account from "./pages/Account";
-import Upgrade from "./pages/Upgrade";
 import Home from "./pages/Home";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/upgrade" element={<Upgrade />} />
         </Routes>
       </div>
     </Router>

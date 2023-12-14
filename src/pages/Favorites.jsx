@@ -3,8 +3,8 @@ import React from "react";
 const Favorites = () => {
 
     return (
-        <div>
-            hello
+        <div className="flex justify-center items-center w-screen h-screen">
+            <h1>favorites</h1>
         </div>
     );
 }

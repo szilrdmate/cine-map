@@ -4,17 +4,20 @@ import MapComponent from '../components/MapComponent';
 import Footer from '../components/Footer';
 
 const Home = () => {
-  let { city } = useParams();
+  const { city } = useParams();
 
-  // If no city is specified in the URL, default to Paris
-  const cityToRender = city || "paris";
+  // Define a default city here
+  const defaultCity = 'paris'; // Use a valid city name from your cityCoordinates
+  const currentCity = city || defaultCity;
 
   return (
     <div>
-      <MapComponent city={cityToRender} />
-        <Footer />
+      <MapComponent city={currentCity} />
+      <Footer />
     </div>
   );
 };
 
 export default Home;
+
+
