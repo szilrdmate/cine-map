@@ -13,12 +13,41 @@ const MapComponent = ({ city }) => {
     const { lat, lng } = cityCoordinates[city];
     const map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/mapbox/standard-beta", // You can use other styles that support 3D buildings
       center: [lng, lat],
       zoom: 12,
+      pitch: 62, // Set pitch for 3D effect
+      bearing: -20, // Optional: Adjust the bearing for the initial map load
+      hash: true,
     });
   
-    map.on('load', () => {
+    map.on('style.load', () => {
+      // Add the 3D buildings layer
+
+      map.setConfigProperty("basemap", "lightPreset", "dusk");
+      map.setConfigProperty('basemap', "showPlaceLabels", false)
+      map.setConfigProperty('basemap', "showRoadLabels", false)
+      map.setConfigProperty('basemap', "showPointOfInterestLabels", false)
+      map.setConfigProperty('basemap', "showTransitLabels", false)
+      
+    
+
+      map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'paint': {
+          'fill-extrusion-color': '#aaa',
+          'fill-extrusion-height': ["get", "height"],
+          'fill-extrusion-base': ["get", "min_height"],
+          'fill-extrusion-opacity': 0.6
+        }
+      });
+
+      // Add markers and popups for movie locations
       movieLocations.forEach((movie) => {
         movie.locations.forEach((location) => {
           const markerEl = document.createElement('div');
@@ -34,12 +63,13 @@ const MapComponent = ({ city }) => {
             .addTo(map);
   
           markerEl.addEventListener('click', () => {
-            openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });
+            // Implement the openMovieCard functionality
+            // openMovieCard({ title: movie.title, year: movie.year, location: location.name, image: movie.image });
           });
         });
       });
     });
-  
+
     return () => map.remove();
   }, [city]);
 
@@ -47,3 +77,4 @@ const MapComponent = ({ city }) => {
 };
 
 export default MapComponent;
+
