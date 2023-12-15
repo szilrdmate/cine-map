@@ -26,7 +26,7 @@ const Navbar = () => {
   const dropdownIcon = isDropdownOpen ? "▲" : "▼";
 
   return (
-    <nav className="bg-white shadow-2xl rounded-3xl absolute z-20 w-full h-24">
+    <nav className="bg-white shadow-2xl rounded-b-3xl absolute z-20 w-full h-24">
       <div className="px-8 w-full h-full flex justify-between items-center">
         <div className="flex space-x-7">
           <Link to="/" className="flex items-center">

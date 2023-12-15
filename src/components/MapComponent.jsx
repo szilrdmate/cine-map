@@ -24,11 +24,23 @@ const MapComponent = ({ city }) => {
 
     if (!cityCoordinates[city]) return;
     const { lat, lng } = cityCoordinates[city];
-  
+;
+
     const map = mapRef.current;
+    const navControl = new mapboxgl.NavigationControl();
+    map.addControl(navControl);
+
+    setTimeout(() => {
+      const navControlContainer = map.getContainer().querySelector('.mapboxgl-ctrl-top-right');
+      if (navControlContainer) {
+        // Remove the default position class and apply Tailwind classes
+        navControlContainer.classList.remove('mapboxgl-ctrl-top-right');
+        navControlContainer.classList.add('absolute', 'bottom-60', 'right-12', 'md:block', 'hidden');
+      }
+    }, 0);
+
     map.jumpTo({ center: [lng, lat], zoom: 16, pitch: 62, bearing: -20 });
-    
-  
+
     const handleStyleLoad = () => {
       map.setConfigProperty("basemap", "lightPreset", "dusk")
       map.setConfigProperty('basemap', "showPlaceLabels", false)
@@ -93,8 +105,8 @@ const MapComponent = ({ city }) => {
     <div>
       <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh"}} />
       {selectedMovie && <MovieCard movie={selectedMovie} onClose={closeCard} />}
-      <button onClick={toggleView} className="absolute bottom-44 right-12 bg-white rounded-full px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold">
-        2D/3D
+      <button onClick={toggleView} className="absolute bottom-2 right-2 z-20 md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold">
+        2D / 3D
       </button>
     </div>
   );
