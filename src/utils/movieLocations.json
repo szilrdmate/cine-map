@@ -118,5 +118,65 @@
     "locations": [
       { "name": "Bank of England", "lat": 51.5142, "lng": -0.0876 }
     ]
+  },
+  {
+    "title": "La La Land",
+    "locations": [
+      { "name": "Griffith Observatory", "lat": 34.118434, "lng": -118.300393 }
+    ]
+  },
+  {
+    "title": "Roman Holiday",
+    "locations": [
+      { "name": "Spanish Steps", "lat": 41.9057, "lng": 12.4823 }
+    ]
+  },
+  {
+    "title": "The Bourne Identity",
+    "locations": [
+      { "name": "Pont Neuf", "lat": 48.8569, "lng": 2.3407 }
+    ]
+  },
+  {
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "locations": [
+      { "name": "Leadenhall Market", "lat": 51.5128, "lng": -0.0834 }
+    ]
+  },
+  {
+    "title": "The Grand Budapest Hotel",
+    "locations": [
+      { "name": "Görlitz, Germany", "lat": 51.1565, "lng": 14.9882 }
+    ]
+  },
+  {
+    "title": "Eat Pray Love",
+    "locations": [
+      { "name": "Ubud, Bali", "lat": -8.5069, "lng": 115.2625 }
+    ]
+  },
+  {
+    "title": "Casablanca",
+    "locations": [
+      { "name": "Rick's Café", "lat": 33.5915, "lng": -7.6764 }
+    ]
+  },
+  {
+    "title": "Lost in Translation",
+    "locations": [
+      { "name": "Park Hyatt Tokyo", "lat": 35.6856, "lng": 139.6917 }
+    ]
+  },
+  {
+    "title": "The Great Gatsby",
+    "locations": [
+      { "name": "Oheka Castle, New York", "lat": 40.8262, "lng": -73.4439 }
+    ]
+  },
+  {
+    "title": "Forrest Gump",
+    "locations": [
+      { "name": "Chippewa Square, Savannah", "lat": 32.0762, "lng": -81.0922 }
+    ]
   }
 ]

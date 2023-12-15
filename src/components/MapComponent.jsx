@@ -7,34 +7,27 @@ import cityCoordinates from "../utils/cities";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = ({ city }) => {
-  const mapContainerRef = useRef(null); // Create a ref for the map container
-  const mapRef = useRef(null)
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     if (!mapRef.current) {
-      // Initialize the map if it doesn't exist
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
-        // ... other map options ...
+        style: "mapbox://styles/mapbox/standard-beta",
+        zoom: 14,
       });
     }
-    if (!cityCoordinates[city]) return;
 
+    if (!cityCoordinates[city]) return;
     const { lat, lng } = cityCoordinates[city];
 
-    // Initialize the map
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/standard-beta",
-      center: [lng, lat],
-      zoom: 12,
-      pitch: 62,
-      bearing: -20,
-    });
+    const map = mapRef.current;
+    map.jumpTo({ center: [lng, lat], zoom: 16, pitch: 62, bearing: -20 });
+    
   
     map.on('style.load', () => {
-
-      map.setConfigProperty("basemap", "lightPreset", "dusk");
+      map.setConfigProperty("basemap", "lightPreset", "dusk")
       map.setConfigProperty('basemap', "showPlaceLabels", false)
       map.setConfigProperty('basemap', "showRoadLabels", false)
       map.setConfigProperty('basemap', "showPointOfInterestLabels", false)
@@ -60,14 +53,30 @@ const MapComponent = ({ city }) => {
 
     return () => {
       if (mapRef.current) {
-        map.remove();
+        mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, [city]); // Depend on the city prop
+  }, [city]);
 
-  return <div ref={mapContainerRef} style={{ width: "100%", height: "100vh" }} />;
+  // Function to toggle between 2D and 3D
+  const toggleView = () => {
+    const map = mapRef.current;
+    if (map.getPitch() === 0) {
+      map.easeTo({ pitch: 60, bearing: -20 });
+    } else {
+      map.easeTo({ pitch: 0, bearing: 0 });
+    }
+  };
+
+  return (
+    <div>
+      <div ref={mapContainerRef} style={{ width: "100%", height: "100vh" }} />
+      <button onClick={toggleView} className="absolute bottom-44 right-12 bg-white rounded-full px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold">
+        2D/3D
+      </button>
+    </div>
+  );
 };
 
 export default MapComponent;
-
