@@ -56,7 +56,8 @@ const MapComponent = ({ city }) => {
               title: movie.title,
               name: location.name,
               lat: location.lat,
-              lng: location.lng
+              lng: location.lng,
+              imageUrl: location.imageUrl
             });
           });
         });
