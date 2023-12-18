@@ -95,14 +95,14 @@ const Navbar = () => {
                   London
                 </Link>
                 <Link
-                  to="/london"
+                  to="/budapest"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
                   onClick={() => handleExploreLinkClick(cityCoordinates.budapest)}
                 >
                   Budapest
                 </Link>
                 <Link
-                  to="/london"
+                  to="/newyork"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
                   onClick={() => handleExploreLinkClick(cityCoordinates.newyork)}
                 >
@@ -151,17 +151,31 @@ const Navbar = () => {
       {/* Mobile menu */}
       <div
         className={`md:hidden ${
-          isOpen ? "block bg-white rounded-3xl" : "hidden"
+          isOpen ? "block bg-white overflow-hidden opacity-100 rounded-3xl border-[1px] border-gray-300 shadow-xl transition-all duration-300" : "hidden opacity-0"
         }`}
       >
+          <form onSubmit={handleSearchSubmit} className="flex overflow-hidden px-2 justify-center">
+            <input
+              className="py-1 px-6 text-lg font-semibold text-gray-900 transition duration-300 focus:outline-none"
+              placeholder="Search other cities..."
+              type="search"
+              name="searchbar"
+              id="searchbar"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            /> 
+            <button className="aspect-square h-[64px] bg-transparent py-2 px-2 rounded-full text-teal-950 text-lg" type="submit"><FontAwesomeIcon icon={faSearch} /></button>
+          </form>
+          <hr />
         <Link
           to="/"
-          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+          className="block w-full text-center py-4 px-4 text-2xl font-semibold hover:bg-gray-200"
         >
-          Home
+          Map
         </Link>
+        <hr />
         {/* Mobile Explore Dropdown */}
-        <div className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200">
+        <div className="block w-full text-center py-4 px-4 text-2xl font-semibold hover:bg-gray-200">
           <button
             onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
           >
@@ -172,34 +186,35 @@ const Navbar = () => {
             <div className="py-1">
               <Link
                 to="/paris"
-                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center text-2xl hover:bg-gray-200"
               >
                 Paris
               </Link>
               <Link
                 to="/london"
-                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center text-lg hover:bg-gray-200"
               >
                 London
               </Link>
               <Link
                 to="/budapest"
-                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center text-lg hover:bg-gray-200"
               >
                 Budapest
               </Link>
               <Link
                 to="/newyork"
-                className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+                className="block w-full text-center text-lg hover:bg-gray-200"
               >
                 New York
               </Link>
             </div>
           )}
         </div>
+        <hr />
         <Link
           to="/favorites"
-          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+          className="block w-full text-center py-4 px-4 text-2xl font-semibold hover:bg-gray-200"
         >
           Favorites
         </Link>
