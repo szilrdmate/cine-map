@@ -2,6 +2,13 @@
 
 const Footer = () => {
 
+  {/*const handleFavoriteSelect = (movieId) => {
+    const selectedMovie = movieLocations.find(movie => movie.id === movieId);
+    if (selectedMovie) {
+      dispatch({ type: 'SET_LOCATION', payload: { type: 'movie', coordinates: selectedMovie.locations[0] } });
+    }
+  }; */}
+
 
   return (
     <div className="md:flex justify-center bg-white w-screen z-10 absolute bottom-0 left-0 h-12 hidden">

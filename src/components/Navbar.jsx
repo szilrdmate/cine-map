@@ -1,31 +1,43 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import mapboxgl from "mapbox-gl";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?access_token=${mapboxgl.accessToken}`);
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const coordinates = data.features[0].geometry.coordinates;
+        if (coordinates) {
+          dispatch({ type: 'SET_COORDINATES', payload: { lng: coordinates[0], lat: coordinates[1] } });
+        }
+      } else {
+        console.log("No results found");
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };  
   
 
-  const menuIcon = (
-    <svg
-      className="w-10 h-10"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 6h16M4 12h16m-7 6h7"
-      ></path>
-    </svg>
-  );
-
-  
   const dropdownIcon = isDropdownOpen ? "▲" : "▼";
 
   return (
@@ -98,11 +110,19 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Secondary Navbar items */}
-        <div className="hidden md:flex items-center space-x-4">
+        {/* Searchbar */}
+        <div className="hidden md:flex items-center">
           <form onSubmit={handleSearchSubmit}>
-            <input className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 hover:text-white" placeholder="Search other cities..." type="search" name="searchbar" id="searchbar" value={searchQuery}
-            onChange={handleSearchInputChange}/>
+            <input
+              className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 focus:outline-none"
+              placeholder="Search other cities..."
+              type="search"
+              name="searchbar"
+              id="searchbar"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            /> 
+            <button className="h-[44px] w-[44px] absolute right-8 bg-transparent py-2 px-2 rounded-full text-teal-950 text-lg" type="submit"><FontAwesomeIcon icon={faSearch} /></button>
           </form>
         </div>
 
@@ -112,14 +132,21 @@ const Navbar = () => {
             className="outline-none mobile-menu-button"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {menuIcon}
+            <FontAwesomeIcon className="text-3xl text-teal-950" icon={faBarsStaggered} />
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden ${isOpen ? "block bg-white rounded-3xl" : "hidden"}`}>
-        <Link to="/" className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200">
+      <div
+        className={`md:hidden ${
+          isOpen ? "block bg-white rounded-3xl" : "hidden"
+        }`}
+      >
+        <Link
+          to="/"
+          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
+        >
           Home
         </Link>
         {/* Mobile Explore Dropdown */}

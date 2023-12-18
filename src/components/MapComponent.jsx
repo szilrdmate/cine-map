@@ -1,30 +1,49 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from 'react-redux';
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+
 import movieLocations from "../utils/movieLocations.json";
-import cityCoordinates from "../utils/cities";
-import MovieCard from "./MovieCard"
+import cityCoordinates from "../utils/cities.js";
+
+import MovieCard from "./MovieCard";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-const MapComponent = ({ city }) => {
+const MapComponent = () => {
+  const { type, coordinates, movieId } = useSelector((state) => state.city.location);
+  const city = useSelector((state) => state.city.city);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     if (!mapRef.current) {
-      // Initialize the map only once
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/standard-beta",
-        zoom: 16,
-      });
+        zoom: 14,
+        pitch: 62,
+        bearing: -20,
+      })
+    }
+
+    switch (type) {
+      case 'coordinates':
+        mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 14 });
+        break;
+      case 'movie':
+        // Logic to set map location based on movieId
+        break;
+      case 'default':
+        mapRef.current.flyTo({ center: [2.293920, 48.85934], zoom: 16 });
+        break;
+      default:
     }
 
     if (!cityCoordinates[city]) return;
     const { lat, lng } = cityCoordinates[city];
-
+  
     const map = mapRef.current;
     const navControl = new mapboxgl.NavigationControl();
     map.addControl(navControl);
@@ -52,15 +71,19 @@ const MapComponent = ({ city }) => {
         movie.locations.forEach((location) => {
           // Create a HTML element for each feature (marker)
           const markerEl = document.createElement('div');
-          markerEl.className = 'cursor-pointer';
-          markerEl.textContent = '📍';
-          markerEl.style.fontSize = '2.5em';
-      
+          markerEl.className = 'marker'; // You can define a CSS class for markers
+    
           // Create a marker at the given location
           new mapboxgl.Marker(markerEl)
             .setLngLat([location.lng, location.lat])
             .addTo(map);
-      
+    
+          // Add a popup to the marker
+          new mapboxgl.Popup()
+            .setLngLat([location.lng, location.lat])
+            .setHTML(`<h3>${movie.title}</h3><p>${location.name}</p>`)
+            .addTo(map);
+    
           // Add a click event listener to the marker
           markerEl.addEventListener('click', () => {
             setSelectedMovie({
@@ -84,7 +107,7 @@ const MapComponent = ({ city }) => {
         mapRef.current = null;
       }
     };
-  }, [city]);
+  }, [type, coordinates, movieId]);
 
   // Function to toggle between 2D and 3D
   const toggleView = () => {
