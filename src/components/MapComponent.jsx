@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../utils/movieLocations.json";
@@ -24,7 +24,6 @@ const MapComponent = ({ city }) => {
 
     if (!cityCoordinates[city]) return;
     const { lat, lng } = cityCoordinates[city];
-;
 
     const map = mapRef.current;
     const navControl = new mapboxgl.NavigationControl();

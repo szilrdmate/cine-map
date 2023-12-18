@@ -1,4 +1,5 @@
-import React from 'react';
+// src/pages/Home.jsx
+
 import { useParams } from 'react-router-dom';
 import MapComponent from '../components/MapComponent';
 import Footer from '../components/Footer';

@@ -1,4 +1,4 @@
-import React from "react";
+// src/components/MovieCards.jsx
 
 const MovieCard = ({ movie, onClose }) => {
   if (!movie) return null;

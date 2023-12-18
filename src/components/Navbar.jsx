@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  
 
   const menuIcon = (
     <svg
@@ -23,6 +25,7 @@ const Navbar = () => {
     </svg>
   );
 
+  
   const dropdownIcon = isDropdownOpen ? "▲" : "▼";
 
   return (
@@ -93,22 +96,14 @@ const Navbar = () => {
           >
             Favorites
           </Link>
-          <Link
-            to="/settings"
-            className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
-          >
-            Settings
-          </Link>
         </div>
 
         {/* Secondary Navbar items */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link
-            to="/account"
-            className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 hover:bg-teal-950 hover:text-white"
-          >
-            My Account
-          </Link>
+          <form onSubmit={handleSearchSubmit}>
+            <input className="py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 hover:text-white" placeholder="Search other cities..." type="search" name="searchbar" id="searchbar" value={searchQuery}
+            onChange={handleSearchInputChange}/>
+          </form>
         </div>
 
         {/* Mobile menu button */}
@@ -169,18 +164,6 @@ const Navbar = () => {
           className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
         >
           Favorites
-        </Link>
-        <Link
-          to="/settings"
-          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
-        >
-          Settings
-        </Link>
-        <Link
-          to="/account"
-          className="block w-full text-center py-2 px-4 text-sm hover:bg-gray-200"
-        >
-          Account
         </Link>
       </div>
     </nav>
