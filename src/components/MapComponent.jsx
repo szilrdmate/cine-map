@@ -7,14 +7,12 @@ import cityCoordinates from "../utils/cities.js";
 import movieLocations from "../utils/movieLocations.json";
 
 import MovieCard from "./MovieCard";
-import Loading from "./LoadingPage.jsx";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = () => {
   const { type, coordinates, movieId } = useSelector((state) => state.city.location);
   const city = useSelector((state) => state.city.city);
-  const [isLoading, setIsLoading] = useState(true);
   
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -71,7 +69,6 @@ const MapComponent = () => {
           });
         });
       });
-      setIsLoading(false)
     }
     // Initialize the map only if it's not already created
     if (!mapRef.current) {
@@ -129,7 +126,6 @@ const MapComponent = () => {
 
   return (
     <div>
-      {isLoading && <Loading />}
       <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh"}} />
       {selectedMovie && <MovieCard movie={selectedMovie} onClose={closeCard} />}
       <button onClick={toggleView} className="absolute bottom-2 right-2 z-[19] md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold">
