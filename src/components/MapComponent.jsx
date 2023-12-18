@@ -13,12 +13,16 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 const MapComponent = () => {
   const { type, coordinates, movieId } = useSelector((state) => state.city.location);
   const city = useSelector((state) => state.city.city);
+  
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
+    console.log("useEffect running");
+    // Initialize the map only if it's not already created
     if (!mapRef.current) {
+      console.log("Initializing map");
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/standard-beta",
@@ -31,15 +35,18 @@ const MapComponent = () => {
     switch (type) {
       case 'coordinates':
         mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 14 });
+        console.log(`Going to ${coordinates.lng} ${coordinates.lat}`)
         break;
       case 'movie':
         // Logic to set map location based on movieId
         break;
       case 'default':
         mapRef.current.flyTo({ center: [2.293920, 48.85934], zoom: 16 });
+        console.log(`Going to default`)
         break;
       default:
     }
+
 
     if (!cityCoordinates[city]) return;
     const { lat, lng } = cityCoordinates[city];
@@ -98,16 +105,17 @@ const MapComponent = () => {
       });
     }
 
-    map.on('style.load', handleStyleLoad);
+    map.on('load', handleStyleLoad)
 
+    // Clean-up function
     return () => {
       if (mapRef.current) {
-        mapRef.current.off('style.load', handleStyleLoad);
+        mapRef.current.off('load', handleStyleLoad);
         mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, [type, coordinates, movieId]);
+  }, [type, coordinates, movieId, city]);
 
   // Function to toggle between 2D and 3D
   const toggleView = () => {
@@ -130,6 +138,7 @@ const MapComponent = () => {
       <button onClick={toggleView} className="absolute bottom-2 right-2 z-20 md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold">
         2D / 3D
       </button>
+
     </div>
   );
 };

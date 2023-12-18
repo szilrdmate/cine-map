@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-
 // Redux State
 const initialState = {
   location: {
     type: 'default', // 'coordinates' or 'movie'
     coordinates: { lat: 0, lng: 0 },
-    movieId: null
   },
 };
 

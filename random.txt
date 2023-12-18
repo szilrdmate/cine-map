@@ -1,0 +1,6 @@
+
+      {isLoading && (
+      <div className="loading-screen h-screen w-screen z-50 bg-teal-950 fixed top-0 left-0 flex items-center justify-center"> {/* Style this div as needed */}
+        <div className="spinner border-4 border-teal-200 w-16 h-16 rounded-full border-l-teal-800 animate-spin "></div> {/* Style this for the spinning animation */}
+      </div>
+    )} 

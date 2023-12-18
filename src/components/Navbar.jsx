@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import cityCoordinates from "../utils/cities";
+import { setMapCoordinates } from "../utils/mapActions";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -35,8 +37,12 @@ const Navbar = () => {
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
-  };  
+  }; 
   
+  const handleExploreLinkClick = (cityCoordinates) => {
+    // Dispatch the action to update coordinates in Redux store
+    dispatch(setMapCoordinates(cityCoordinates));
+  };
 
   const dropdownIcon = isDropdownOpen ? "▲" : "▼";
 
@@ -54,7 +60,7 @@ const Navbar = () => {
             to="/"
             className="lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300"
           >
-            Home
+            Map
           </Link>
 
           {/* Explore Dropdown */}
@@ -73,27 +79,32 @@ const Navbar = () => {
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
+                {/* Pass city coordinates to the handleExploreLinkClick function */}
                 <Link
                   to="/paris"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
+                  onClick={() => handleExploreLinkClick(cityCoordinates.paris)}
                 >
                   Paris
                 </Link>
                 <Link
                   to="/london"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
+                  onClick={() => handleExploreLinkClick(cityCoordinates.london)}
                 >
                   London
                 </Link>
                 <Link
-                  to="/budapest"
+                  to="/london"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
+                  onClick={() => handleExploreLinkClick(cityCoordinates.budapest)}
                 >
                   Budapest
                 </Link>
                 <Link
-                  to="/newyork"
+                  to="/london"
                   className="block py-2 px-4 text-sm hover:bg-gray-200"
+                  onClick={() => handleExploreLinkClick(cityCoordinates.newyork)}
                 >
                   New York
                 </Link>
