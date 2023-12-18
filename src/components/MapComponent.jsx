@@ -81,7 +81,6 @@ const MapComponent = () => {
         style: "mapbox://styles/mapbox/standard-beta",
         zoom: 14,
         pitch: 62,
-        bearing: -20,
       })
       mapRef.current.on('style.load', handleStyleLoad);
     }
