@@ -7,18 +7,6 @@ import PropTypes from 'prop-types';
 const MovieCard = ({ movie, onClose }) => {
   if (!movie) return null;
 
-  MovieCard.propTypes = {
-    movie: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      lat: PropTypes.number.isRequired,
-      lng: PropTypes.number.isRequired,
-      imageUrl: PropTypes.string,
-      locationImg: PropTypes.string
-    }),
-    onClose: PropTypes.func.isRequired
-  };
-
   return (
     <div className="movie-card absolute top-[50%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border">
       <button onClick={onClose} className="close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
@@ -29,10 +17,10 @@ const MovieCard = ({ movie, onClose }) => {
       <div className="pt-4 px-2">
         <h2 className="font-bold text-3xl mb-4">{movie.title}</h2>
         <div>
-          {movie.locationImg && <img src={movie.locationImg} alt={movie.title} className="rounded-3xl w-full h-48 mx-auto object-cover mb-4 shadow-xl" />}
+          {movie.locationImg && <img src={movie.locationImg} alt={movie.title} className="rounded-xl max-w-[304px] w-full max-w h-48 mx-auto object-cover mb-4 shadow-xl" />}
           <div className="flex justify-between font-medium">
             <p className="text-sm">{movie.name}</p>
-            <p className="text-sm">{movie.lng}° {movie.lat}°</p>
+            <p className="text-sm">{parseFloat(movie.lng).toFixed(2)}° {parseFloat(movie.lat).toFixed(2)}°</p>
           </div>
         </div>
         <button className="my-3 w-full rounded-lg py-2 bg-gray-100 text-gray-800 font-medium">Get more info on IMDB</button>
@@ -41,5 +29,16 @@ const MovieCard = ({ movie, onClose }) => {
   );
 };
 
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+    imageUrl: PropTypes.string,
+    locationImg: PropTypes.string
+  }),
+  onClose: PropTypes.func.isRequired
+};
 
 export default MovieCard;
