@@ -1,7 +1,8 @@
-// src/utils/firebaseConfig.js
-import firebase from "firebase/app";
-import 'firebase/firestore';
+// src/utils/fireBaseConfig.js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore"; // Corrected import for Firestore
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "cinemap-c958c.firebaseapp.com",
@@ -9,11 +10,12 @@ const firebaseConfig = {
   storageBucket: "cinemap-c958c.appspot.com",
   messagingSenderId: "930485608135",
   appId: "1:930485608135:web:b4b2b5bf3e577e0edce8e2",
+  measurementId: "G-E70D6M11TH"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); // Corrected Firestore initialization
 
-const db = firebase.firestore();
 
 export default db;

@@ -1,19 +1,23 @@
-import db from './fireBaseConfig'; // Import your Firestore instance
-import movieData from "./movieLocations.json"
+// src/utils/addData.js
+import db from './fireBaseConfig.js';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
-const addDataToFirestore = async () => {
-    const moviesCollection = db.collection('movies');
-  
-    for (const movie of movieData) {
-      try {
-        await moviesCollection.add(movie);
+
+const movieData = [
+
+  ]
+
+  const addMoviesToFirestore = async () => {
+    try {
+      for (const movie of movieData) {
+        const docRef = doc(collection(db, 'movies'), movie.title);
+        await setDoc(docRef, movie);
         console.log(`Added movie: ${movie.title}`);
-      } catch (error) {
-        console.error("Error writing document: ", error);
       }
+      console.log('All movies added to Firestore');
+    } catch (error) {
+      console.error('Error adding movies to Firestore:', error);
     }
-  
-    console.log("All data added to Firestore");
   };
-
-addDataToFirestore();
+  
+  addMoviesToFirestore();
