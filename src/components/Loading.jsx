@@ -17,7 +17,7 @@ const Loading = () => {
   return (
     <div>
       {loading && (
-        <div className={`w-screen h-screen flex justify-center items-center z-[100] bg-gray-300 ${fadeOut ? 'animate-fadeOut' : ''}`}>
+        <div className={`w-screen h-screen flex justify-center items-center bg-gray-300 ${fadeOut ? 'animate-fadeOut' : ''}`}>
           <PropagateLoader size={30} color={"#212121"} loading={!fadeOut} />
         </div>
       )}
