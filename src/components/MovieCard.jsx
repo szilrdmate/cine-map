@@ -2,17 +2,27 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-
+import { useState } from 'react';
+import "./keyframes.css"
 
 const MovieCard = ({ movie, onClose }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(onClose, 500);
+  };
+
   if (!movie) return null;
 
+  const animationClass = isClosing ? 'slide-out' : 'slide-in';
+
   return (
-    <div className="movie-card absolute top-[50%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border">
-      <button onClick={onClose} className="close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
+    <div className={`movie-card ${animationClass} absolute top-[20%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border`}>
+      <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
       <div>
         {movie.imageUrl && <img src={movie.imageUrl} alt={movie.title} className="w-full h-auto max-w-[320px] aspect-video object-cover" />}
-        <div className="absolute top-0 left-0 w-full h-[190px] bg-gradient-to-b from-black to-transparent bg-opacity-25"></div>
+       
       </div>
       <div className="pt-4 px-2">
         <h2 className="font-bold text-3xl mb-4">{movie.title}</h2>

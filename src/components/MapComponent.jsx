@@ -2,28 +2,21 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-
 import cityCoordinates from "../utils/cities.js";
 import movieLocations from "../utils/movieLocations.json";
-
 import MovieCard from "./MovieCard";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = () => {
-  const { type, coordinates, movieId } = useSelector(
-    (state) => state.city.location
-  );
+  const { type, coordinates, movieId } = useSelector((state) => state.city.location);
   const city = useSelector((state) => state.city.city);
-
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     console.log("useEffect running");
-
-    // const map = mapRef.current;
 
     const handleStyleLoad = () => {
       console.log("Styles loading");
@@ -73,18 +66,6 @@ const MapComponent = () => {
       mapRef.current.on("style.load", handleStyleLoad);
     }
 
-    // Clean-up function
-    return () => {
-      if (mapRef.current) {
-        console.log("Cleaning up");
-        mapRef.current.off("load", handleStyleLoad);
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     switch (type) {
       case "coordinates":
         mapRef.current.flyTo({
@@ -96,12 +77,28 @@ const MapComponent = () => {
       case "movie":
         // Logic to set map location based on movieId
         break;
+      case "default":
+        mapRef.current.flyTo({
+          center: [2.29392, 48.85934],
+          zoom: 16 });
+        console.log(`Going to default coordinates`);
+        break;
       default:
-        mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
-        console.log(`Default location`);
+        console.log(`Default`);
     }
+
     if (!cityCoordinates[city]) return;
-  },[type, coordinates, movieId, city])
+
+    // Clean-up function
+    return () => {
+      if (mapRef.current) {
+        console.log("Cleaning up");
+        mapRef.current.off("load", handleStyleLoad);
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, [type, coordinates, movieId, city]);
 
   // Function to toggle between 2D and 3D
   const toggleView = () => {
@@ -123,7 +120,7 @@ const MapComponent = () => {
       {selectedMovie && <MovieCard movie={selectedMovie} onClose={closeCard} />}
       <button
         onClick={toggleView}
-        className='absolute bottom-2 right-2 z-[19] md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold'>
+        className='absolute bottom-24 sm:block hidden z-[19] md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold'>
         2D / 3D
       </button>
     </div>
