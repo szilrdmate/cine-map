@@ -13,7 +13,8 @@ const MovieCard = ({ movie, onClose }) => {
       name: PropTypes.string.isRequired,
       lat: PropTypes.number.isRequired,
       lng: PropTypes.number.isRequired,
-      imageUrl: PropTypes.string
+      imageUrl: PropTypes.string,
+      locationImg: PropTypes.string
     }),
     onClose: PropTypes.func.isRequired
   };
@@ -28,7 +29,7 @@ const MovieCard = ({ movie, onClose }) => {
       <div className="pt-4 px-2">
         <h2 className="font-bold text-3xl mb-4">{movie.title}</h2>
         <div>
-          {movie.imageUrl && <img src={movie.imageUrl} alt={movie.title} className="rounded-3xl w-full h-24 mx-auto object-cover mb-4 shadow-xl" />}
+          {movie.locationImg && <img src={movie.locationImg} alt={movie.title} className="rounded-3xl w-full h-48 mx-auto object-cover mb-4 shadow-xl" />}
           <div className="flex justify-between font-medium">
             <p className="text-sm">{movie.name}</p>
             <p className="text-sm">{movie.lng}° {movie.lat}°</p>

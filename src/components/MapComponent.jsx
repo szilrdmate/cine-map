@@ -64,7 +64,8 @@ const MapComponent = () => {
               name: location.name,
               lat: location.lat,
               lng: location.lng,
-              imageUrl: location.imageUrl
+              imageUrl: location.imageUrl,
+              locationImg: location.locationImg
             });
           });
         });
