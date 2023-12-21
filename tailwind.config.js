@@ -1,8 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./index.html", "./src/**/*.{jsx,js}"],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeOut: {
+          'from': { opacity: 1 },
+          'to': { opacity: 0 }
+        }
+      },
+      animation: {
+        fadeOut: 'fadeOut 1s forwards'
+      },
+    },
   },
   plugins: [],
-}
+};
