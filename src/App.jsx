@@ -4,7 +4,6 @@ import store from "./utils/store";
 import Navbar from "./components/Navbar";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
-import Loading from "./components/Loading"
 
 function App() {
 
@@ -14,7 +13,6 @@ function App() {
       <div className="App">
         <Provider store={store}>
           <Navbar />
-          <Loading />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/:city" element={<Home />} />
