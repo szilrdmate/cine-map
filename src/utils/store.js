@@ -24,6 +24,15 @@ export const removeFavoriteMovie = (movie) => ({
   payload: movie,
 });
 
+// New action type
+const SET_SELECTED_MOVIE = 'SET_SELECTED_MOVIE';
+
+// New action creator
+export const setSelectedMovie = (movie) => ({
+  type: SET_SELECTED_MOVIE,
+  payload: movie,
+});
+
 // Reducer
 function mapReducer(state = initialState, action) {
   switch (action.type) {
@@ -39,6 +48,8 @@ function mapReducer(state = initialState, action) {
         return { ...state, favorites: [...state.favorites, action.payload] };
     case REMOVE_FAVORITE_MOVIE:
         return { ...state, favorites: state.favorites.filter(movie => movie.title !== action.payload.title) };
+    case SET_SELECTED_MOVIE:
+        return { ...state, selectedMovie: action.payload };
     default:
       return state;
   }

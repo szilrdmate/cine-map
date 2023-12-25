@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 // src/components/MovieCards.jsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { addFavoriteMovie, removeFavoriteMovie } from '../utils/store';
 import "./keyframes.css"
@@ -55,18 +55,6 @@ const MovieCard = ({ movie, onClose }) => {
       </div>
     </div>
   );
-};
-
-MovieCard.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-    imageUrl: PropTypes.string,
-    locationImg: PropTypes.string
-  }),
-  onClose: PropTypes.func.isRequired
 };
 
 export default MovieCard;
