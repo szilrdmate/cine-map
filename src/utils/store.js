@@ -6,7 +6,23 @@ const initialState = {
     type: 'default', // 'coordinates' or 'movie'
     coordinates: { lat: 0, lng: 0 },
   },
+  favorites: [] // Array to store favorite movies
 };
+
+// Action Types
+const ADD_FAVORITE_MOVIE = 'ADD_FAVORITE_MOVIE';
+const REMOVE_FAVORITE_MOVIE = 'REMOVE_FAVORITE_MOVIE';
+
+// Action Creators
+export const addFavoriteMovie = (movie) => ({
+  type: ADD_FAVORITE_MOVIE,
+  payload: movie,
+});
+
+export const removeFavoriteMovie = (movie) => ({
+  type: REMOVE_FAVORITE_MOVIE,
+  payload: movie,
+});
 
 // Reducer
 function mapReducer(state = initialState, action) {
@@ -19,6 +35,10 @@ function mapReducer(state = initialState, action) {
       return { ...state, location: { type: 'movie', movieId: action.payload }};
     case 'SET_DEFAULT_LOCATION':
       return { ...state, location: { type: 'default', coordinates: action.payload }};
+    case ADD_FAVORITE_MOVIE:
+        return { ...state, favorites: [...state.favorites, action.payload] };
+    case REMOVE_FAVORITE_MOVIE:
+        return { ...state, favorites: state.favorites.filter(movie => movie.title !== action.payload.title) };
     default:
       return state;
   }
