@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedMovie } from '../utils/store.js';
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -10,7 +13,7 @@ const Footer = () => {
   };
 
   // Calculate the number of skeletons needed to fill up to three items
-  const skeletonCount = Math.max(9 - favorites.length, 0);
+  const skeletonCount = Math.max(10 - favorites.length, 0);
 
   return (
     <div className="md:flex justify-center bg-white w-screen z-10 absolute bottom-0 left-0 h-12 hidden">
@@ -37,7 +40,7 @@ const Footer = () => {
           ))}
         </div>
         <div className="w-40 h-10 left-0 bottom-40 bg-teal-950 absolute z-10 rounded-tr-2xl md:flex items-center justify-center">
-          <a className="text-white font-semibold text-2xl" href="#">Favorites</a>
+          <Link className="text-white font-semibold text-2xl" to="/favorites">Favorites <FontAwesomeIcon className="text-base" icon={faChevronRight} /></Link>
         </div>
       </div>
 
