@@ -44,6 +44,7 @@ const MapComponent = () => {
           markerEl.addEventListener("click", () => {
             dispatch(setSelectedMovie({
               ...movie,
+              name: location.name,
               lat: location.lat,
               lng: location.lng,
               imageUrl: location.imageUrl,

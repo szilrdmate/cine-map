@@ -8,13 +8,13 @@ import "./keyframes.css"
 import { useDispatch, useSelector } from 'react-redux';
 
 const MovieCard = ({ movie, onClose }) => {
+  console.log(movie);
   const [isClosing, setIsClosing] = useState(false);
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.city.favorites)
 
   const handleFavoriteClick = () => {
     // Check if the movie is already in favorites
-    // eslint-disable-next-line no-undef
     const isFavorite = favorites.some(favMovie => favMovie.title === movie.title);
 
     if (isFavorite) {
@@ -46,7 +46,7 @@ const MovieCard = ({ movie, onClose }) => {
         <h2 className="font-bold text-3xl mb-4">{movie.title}</h2>
         <div>
           {movie.locationImg && <img src={movie.locationImg} alt={movie.title} className="rounded-xl max-w-[304px] w-full max-w h-48 mx-auto object-cover mb-4 shadow-xl" />}
-          <div className="flex justify-between font-medium">
+          <div className="flex justify-between font-medium">    
             <p className="text-sm">{movie.name}</p>
             <p className="text-sm">{parseFloat(movie.lng).toFixed(2)}° {parseFloat(movie.lat).toFixed(2)}°</p>
           </div>
