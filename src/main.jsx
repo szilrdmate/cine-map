@@ -18,5 +18,9 @@ if (process.env.NODE_ENV === 'development') {
     </React.StrictMode>
   );
 } else {
-  root.render(<App />);
+  root.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+  );
 }
