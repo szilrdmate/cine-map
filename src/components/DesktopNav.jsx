@@ -90,7 +90,7 @@ const DesktopNav = ({
         <div className='hidden md:flex items-center'>
           <form onSubmit={handleSearchSubmit}>
             <input
-              className='placeholder:italic placeholder:font-medium py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 focus:outline-none active:outline-none'
+              className='placeholder:font-medium py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 focus:outline-none active:outline-none'
               type='search'
               name='searchbar'
               id='searchbar'

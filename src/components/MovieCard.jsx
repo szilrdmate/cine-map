@@ -47,7 +47,7 @@ const MovieCard = ({ movie, onClose }) => {
   const animationClass = isClosing ? 'slide-out' : 'slide-in';
 
   return (
-    <div className={`movie-card ${animationClass} absolute top-[12%] md:top-[18%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border max-w-[320px]`}>
+    <div className={`movie-card ${animationClass} h-[495px] w-[240px] md:h-[unset] md:w-[unset] absolute max-w-[240px] md:m-[unset] -mt-[247px] -ml-[120px] top-[50%] left-[50%] md:top-[16%] md:translate-y-[-50%] md:left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border md:max-w-[320px]`}>
       <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
       <button onClick={handleFavoriteClick} className="shadow-2xl close-btn absolute top-2 left-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faStar} /></button>
       <div>

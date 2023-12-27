@@ -6,7 +6,7 @@ import { faSearch, faGlobe, faCompass, faHeart } from "@fortawesome/free-solid-s
 const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, isDropdownOpen, setIsDropdownOpen, handleExploreLinkClick, cityCoordinates }) => {
   return (
     <div id="mobile-nav">
-      <div className="flex items-center absolute z-20 pt-4 px-4 w-full">
+      <div className="flex items-center fixed z-20 pt-4 px-4 w-full">
         <img
           src="./icon.svg"
           alt="icon"
@@ -14,7 +14,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
         />
         <form onSubmit={handleSearchSubmit} className="w-full flex">
           <input
-            className="py-4 px-16 w-full font-medium text-xl text-gray-100 rounded-full transition duration-300 border-[1px] border-solid border-gray-600 shadow-2xl focus:outline-none bg-black backdrop-blur-md bg-opacity-10 focus-within:bg-gray-100 focus-within:text-gray-900 focus-within:backdrop-blur-0 focus-within:bg-opacity-100"
+            className="input py-4 px-16 w-full font-medium text-xl text-gray-100 rounded-full transition duration-300 border-[1px] border-solid border-gray-600 shadow-2xl focus:outline-none bg-black backdrop-blur-md bg-opacity-10 focus-within:bg-gray-100 focus-within:text-gray-900 focus-within:backdrop-blur-0 focus-within:bg-opacity-100 active:bg-gray-100 focus:bg-gray-100"
             placeholder="Search for a city"
             type="search"
             name="searchbar"
@@ -34,7 +34,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
         </form>
       </div>
 
-      <div className="z-20 border-t-solid border-t-2 border-t-gray-300 absolute w-full h-20 bottom-0 left-0 text-4xl bg-white text-gray-900 flex justify-around md:hidden shadow-2xl  ">
+      <div className="z-20 border-t-solid border-t-2 border-t-gray-300 fixed w-full h-20 bottom-0 left-0 text-4xl bg-white text-gray-900 flex justify-around md:hidden shadow-2xl  ">
         <Link to="/">
           <div className="h-full w-[33vw] flex justify-center items-center">
             <FontAwesomeIcon icon={faGlobe} />

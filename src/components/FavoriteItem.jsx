@@ -3,8 +3,8 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
-import { setSelectedMovie, setMapCoordinates, removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { /*setMapCoordinates,*/ removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
 
 const FavoriteItem = ({ favorite }) => {
   const dispatch = useDispatch();
@@ -13,9 +13,9 @@ const FavoriteItem = ({ favorite }) => {
     return str.length > num ? str.slice(0, num) + '...' : str;
   };
 
-  const handleShowOnMap = () => {
+  /*const handleShowOnMap = () => {
     dispatch(setMapCoordinates({ lat: favorite.lat, lng: favorite.lng }))
-  };
+  };*/
 
   const handleFavoriteClick = () => {
     const isFavorite = favorites.some(favMovie => favMovie.title === favorite.title);
@@ -28,9 +28,6 @@ const FavoriteItem = ({ favorite }) => {
 
   return (
     <div className="bg-teal-950 rounded-xl shadow-2xl overflow-hidden relative text-white max-w-xs mx-auto">
-      <button onClick={() => dispatch(setSelectedMovie(null))} className="absolute top-2 right-2 z-10">
-        <FontAwesomeIcon icon={faXmark} />
-      </button>
       <button onClick={handleFavoriteClick} className="absolute top-2 left-2 z-10">
         <FontAwesomeIcon icon={faStar} />
       </button>
@@ -46,9 +43,9 @@ const FavoriteItem = ({ favorite }) => {
           <p>{favorite.name}</p>
           <p>{parseFloat(favorite.lng).toFixed(2)}°, {parseFloat(favorite.lat).toFixed(2)}°</p>
         </div>
-        <button onClick={handleShowOnMap} className="w-full rounded-lg py-2 bg-gray-100 text-gray-800 font-medium mt-2">
+        {/*<button onClick={handleShowOnMap} className="w-full rounded-lg py-2 bg-gray-100 text-gray-800 font-medium mt-2">
           Show on Map
-        </button>
+        </button>*/}
       </div>
     </div>
   );

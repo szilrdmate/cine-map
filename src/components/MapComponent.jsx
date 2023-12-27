@@ -20,9 +20,11 @@ const MapComponent = () => {
 
   const toggleView = () => {
     const map = mapRef.current;
+    console.log('Pitch to 60')
     if (map.getPitch() === 0) {
       map.easeTo({ pitch: 60, bearing: -20 });
     } else {
+      console.log('Pitch to 0')
       map.easeTo({ pitch: 0, bearing: 0 });
     }
   };
@@ -91,9 +93,11 @@ const MapComponent = () => {
   
     switch (type) {
       case "coordinates":
+        console.log('Coordinates switch case')
         mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 16 });
         break;
       default:
+        console.log('Default switch case')
         mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
     }
   }, [type, coordinates, city]);
