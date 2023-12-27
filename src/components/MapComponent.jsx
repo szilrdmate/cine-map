@@ -6,17 +6,20 @@ import cityCoordinates from "../utils/cities.js";
 import movieLocations from "../utils/movieLocations.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../utils/store.js";
+import { useMediaQuery } from "react-responsive";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = () => {
-  const { type, coordinates, movieId } = useSelector((state) => state.city.location);
+  const { type, coordinates } = useSelector((state) => state.city.location);
   const city = useSelector((state) => state.city.city);
   const selectedMovie = useSelector((state) => state.city.selectedMovie); // Use selected movie from Redux
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
-
   const dispatch = useDispatch();
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 768px)'
+  });
 
   useEffect(() => {
     console.log("useEffect running");
@@ -68,17 +71,10 @@ const MapComponent = () => {
 
     switch (type) {
       case "coordinates":
-        mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 14 });
-        break;
-      case "movie":
-        // Logic to set map location based on movieId
-        break;
-      case "default":
-        mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
+        mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 16 });
         break;
       default:
-        // Default case handling
-        break;
+        mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
     }
 
     if (!cityCoordinates[city]) return;
@@ -89,7 +85,7 @@ const MapComponent = () => {
         mapRef.current = null;
       }
     };
-  }, [dispatch, type, coordinates, movieId, city]);
+  }, [dispatch, type, coordinates, city]);
 
   const toggleView = () => {
     const map = mapRef.current;
@@ -104,11 +100,11 @@ const MapComponent = () => {
     <div>
       <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh" }} />
       {selectedMovie && <MovieCard movie={selectedMovie} onClose={() => dispatch(setSelectedMovie(null))} />}
-      <button
+      {isDesktop && (<button
         onClick={toggleView}
-        className='absolute bottom-24 sm:block hidden z-[19] md:bottom-44 md:right-12 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold'>
+        className='absolute z-[19] top-28 right-6 bg-white rounded-lg px-4 py-2 shadow-xl border-[1px] border-solid border-gray-400 font-bold'>
         2D / 3D
-      </button>
+      </button>)}
     </div>
   );
 };

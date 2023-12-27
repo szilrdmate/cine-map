@@ -12,6 +12,7 @@ const initialState = {
 // Action Types
 const ADD_FAVORITE_MOVIE = 'ADD_FAVORITE_MOVIE';
 const REMOVE_FAVORITE_MOVIE = 'REMOVE_FAVORITE_MOVIE';
+const SET_SELECTED_MOVIE = 'SET_SELECTED_MOVIE';
 
 // Action Creators
 export const addFavoriteMovie = (movie) => ({
@@ -24,10 +25,11 @@ export const removeFavoriteMovie = (movie) => ({
   payload: movie,
 });
 
-// New action type
-const SET_SELECTED_MOVIE = 'SET_SELECTED_MOVIE';
+export const setMapCoordinates = (coordinates) => ({
+  type: 'SET_COORDINATES',
+  payload: coordinates,
+});
 
-// New action creator
 export const setSelectedMovie = (movie) => ({
   type: SET_SELECTED_MOVIE,
   payload: movie,

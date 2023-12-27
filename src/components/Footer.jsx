@@ -16,12 +16,15 @@ const Footer = () => {
   const skeletonCount = Math.max(10 - favorites.length, 0);
 
   return (
-    <div className="md:flex justify-center bg-white w-screen z-10 absolute bottom-0 left-0 h-12 hidden">
-      <div className="w-8 h-screen bg-white absolute right-0 bottom-0 z-10"></div>
-      <div className="w-8 h-screen bg-white absolute left-0 bottom-0 z-10"></div>
+    <div className="md:flex justify-center w-screen z-10 absolute bottom-0 left-0 h-12 hidden">
+      {/*TODO: Configure margins or remove them entirely*/}
+      <div className="w-8 h-screen bg-white absolute right-0 bottom-0 z-10 hidden"></div>
+      <div className="w-8 h-screen bg-white absolute left-0 bottom-0 z-10 hidden"></div>
 
-      <div className="absolute z-20 bottom-0 left-8 duration-300 delay-200 transition-all">
-        <div className="w-[calc(100vw-64px)] bg-teal-950 absolute bottom-8 h-32 rounded-b-2xl md:overflow-x-scroll md:flex items-center space-x-4 px-4">
+      {/* TODO: Decide on the fav section animation*/}
+
+      <div className="absolute z-20 hover:-bottom-8 -bottom-36 left-0 duration-300 delay-300 transition-all">
+        <div className="w-[100vw] bg-teal-950 absolute bottom-8 h-36 md:overflow-x-scroll md:flex items-center space-x-4 px-4">
           {favorites.map((movie) => (
             <div key={movie.title} onClick={() => handleMovieSelect(movie)} className="w-32 cursor-pointer">
               <div className="h-20 w-32 bg-teal-800 rounded-xl grid place-items-center mb-1 overflow-hidden">
@@ -39,12 +42,12 @@ const Footer = () => {
             </div>
           ))}
         </div>
-        <div className="w-40 h-10 left-0 bottom-40 bg-teal-950 absolute z-10 rounded-tr-2xl md:flex items-center justify-center">
+        <div className="w-40 h-10 left-0 bottom-44 bg-teal-950 absolute z-10 rounded-tr-2xl md:flex items-center justify-center">
           <Link className="text-white font-semibold text-2xl" to="/favorites">Favorites <FontAwesomeIcon className="text-base" icon={faChevronRight} /></Link>
         </div>
       </div>
 
-      <div className="w-screen z-10 absolute bottom-0 bg-white left-0 h-12"></div>
+      <div className="w-screen z-10 absolute bottom-0 bg-white left-0 h-12 hidden"></div>
 
     </div>
   );

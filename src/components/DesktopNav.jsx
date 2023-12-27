@@ -15,7 +15,7 @@ const DesktopNav = ({
     const dropdownIcon = isDropdownOpen ? faCaretUp : faCaretDown;
 
   return (
-    <div id="desktop-nav" className='bg-white shadow-2xl rounded-b-3xl absolute z-20 w-full h-24'>
+    <div id="desktop-nav" className='bg-white shadow-2xl rounded-3xl absolute z-20 w-full h-24'>
       <div className='px-8 w-full h-full flex justify-between items-center'>
         <div className='flex space-x-7'>
           <Link to='/' className='flex items-center'>
@@ -90,11 +90,12 @@ const DesktopNav = ({
         <div className='hidden md:flex items-center'>
           <form onSubmit={handleSearchSubmit}>
             <input
-              className='py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 focus:outline-none'
-              placeholder='Search other cities...'
+              className='placeholder:italic py-2 px-6 font-semibold text-gray-900 rounded-full transition duration-300 border-2 border-solid border-teal-950 focus:outline-none active:outline-none'
               type='search'
               name='searchbar'
               id='searchbar'
+              autoComplete="off"
+              placeholder="Search other cities..."
               value={searchQuery}
               onChange={handleSearchInputChange}
             />

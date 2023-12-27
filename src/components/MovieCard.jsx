@@ -2,10 +2,10 @@
 // src/components/MovieCards.jsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
-//import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons'; // Import the regular star
+// import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons'; // Import the regular star
 // import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons'; // Import the solid star
 import { useState } from 'react';
-import { addFavoriteMovie, removeFavoriteMovie } from '../utils/store';
+import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../utils/store';
 import "./keyframes.css"
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,13 +37,17 @@ const MovieCard = ({ movie, onClose }) => {
     setTimeout(onClose, 500);
   };
 
+  const handleShowOnMap = () => {
+    dispatch(setMapCoordinates({ lat: movie.lat, lng: movie.lng }));
+    if(onClose) onClose(); // Optionally close the card
+  };
 
   if (!movie) return null;
 
   const animationClass = isClosing ? 'slide-out' : 'slide-in';
 
   return (
-    <div className={`movie-card ${animationClass} absolute top-[20%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border max-w-[320px]`}>
+    <div className={`movie-card ${animationClass} absolute top-[12%] md:top-[18%] translate-y-[-50%] left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border max-w-[320px]`}>
       <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
       <button onClick={handleFavoriteClick} className="shadow-2xl close-btn absolute top-2 left-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faStar} /></button>
       <div>
@@ -60,7 +64,7 @@ const MovieCard = ({ movie, onClose }) => {
             <p className="text-sm">{parseFloat(movie.lng).toFixed(2)}° {parseFloat(movie.lat).toFixed(2)}°</p>
           </div>
         </div>
-        <button className="my-3 w-full rounded-lg py-2 bg-gray-100 text-gray-800 font-medium">Show on Map</button>
+        <button onClick={handleShowOnMap} className="my-3 w-full rounded-lg py-2 bg-gray-100 text-gray-800 font-medium">Show on Map</button>
       </div>
     </div>
   );

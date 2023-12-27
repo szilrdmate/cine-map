@@ -56,7 +56,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/paris"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => handleExploreLinkClick(cityCoordinates.paris)}
+                onClick={() => [handleExploreLinkClick(cityCoordinates.paris), setIsDropdownOpen(false)]}
               >
                 Paris
               </Link>
@@ -64,7 +64,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/london"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => handleExploreLinkClick(cityCoordinates.london)}
+                onClick={() => [handleExploreLinkClick(cityCoordinates.london), setIsDropdownOpen(false)]}
               >
                 London
               </Link>
@@ -72,7 +72,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/budapest"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => handleExploreLinkClick(cityCoordinates.budapest)}
+                onClick={() => [handleExploreLinkClick(cityCoordinates.budapest), setIsDropdownOpen(false)]}
               >
                 Budapest
               </Link>
@@ -80,7 +80,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/newyork"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => handleExploreLinkClick(cityCoordinates.newyork)}
+                onClick={() => [handleExploreLinkClick(cityCoordinates.newyork), setIsDropdownOpen(false)]}
               >
                 New York
               </Link>
