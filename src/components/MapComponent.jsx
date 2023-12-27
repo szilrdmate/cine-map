@@ -1,8 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import cityCoordinates from "../utils/cities.js";
 import movieLocations from "../utils/movieLocations.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../utils/store.js";
@@ -17,15 +16,19 @@ const MapComponent = () => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const dispatch = useDispatch();
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 768px)'
-  });
+  const isDesktop = useMediaQuery({query: '(min-width: 768px)'});
 
-  useEffect(() => {
-    console.log("useEffect running");
+  const toggleView = () => {
+    const map = mapRef.current;
+    if (map.getPitch() === 0) {
+      map.easeTo({ pitch: 60, bearing: -20 });
+    } else {
+      map.easeTo({ pitch: 0, bearing: 0 });
+    }
+  };
 
-    const handleStyleLoad = () => {
-      console.log("Styles loading");
+  const handleStyleLoad = useCallback(() => {
+    console.log("Styles loading");
       mapRef.current.setConfigProperty("basemap", "lightPreset", "dusk");
       mapRef.current.setConfigProperty("basemap", "showPlaceLabels", false);
       mapRef.current.setConfigProperty("basemap", "showRoadLabels", false);
@@ -56,19 +59,36 @@ const MapComponent = () => {
           });
         });
       });
-    };
-      
+  }, []);
+
+  useEffect(() => {
+    console.log('Initilizing map')
     // Initialize the map only if it's not already created
     if (!mapRef.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/standard-beta",
-        zoom: 14,
+        zoom: 16,
         pitch: 62,
+        center: [2.29392, 48.85934]
       });
-      mapRef.current.on("style.load", handleStyleLoad);
+  
+    mapRef.current.on("style.load", handleStyleLoad);
     }
+  
+    return () => {
+      console.log('Removing map instance')
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, []); // Empty dependency array for running once on mount
 
+  useEffect(() => {
+    console.log('Navigation logic')
+    if (!mapRef.current) return;
+  
     switch (type) {
       case "coordinates":
         mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 16 });
@@ -76,29 +96,11 @@ const MapComponent = () => {
       default:
         mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
     }
-
-    if (!cityCoordinates[city]) return;
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, [dispatch, type, coordinates, city]);
-
-  const toggleView = () => {
-    const map = mapRef.current;
-    if (map.getPitch() === 0) {
-      map.easeTo({ pitch: 60, bearing: -20 });
-    } else {
-      map.easeTo({ pitch: 0, bearing: 0 });
-    }
-  };
+  }, [type, coordinates, city]);
 
   return (
     <div>
-      <div ref={mapContainerRef} style={{ width: "100vw", height: "100vh" }} />
+      <div ref={mapContainerRef} className="w-screen h-screen" />
       {selectedMovie && <MovieCard movie={selectedMovie} onClose={() => dispatch(setSelectedMovie(null))} />}
       {isDesktop && (<button
         onClick={toggleView}

@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 const initialState = {
   location: {
     type: 'default', // 'coordinates' or 'movie'
-    coordinates: { lat: 0, lng: 0 },
+    coordinates: { lat: 48.85934, lng: 2.29392 },
   },
   favorites: [] // Array to store favorite movies
 };
