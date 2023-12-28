@@ -1,8 +1,8 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import movieLocations from "../utils/movieLocations.json";
+import movieLocations from "../utils/geoJson.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../utils/store.js";
 import { useMediaQuery } from "react-responsive";
@@ -29,40 +29,6 @@ const MapComponent = () => {
     }
   };
 
-  const handleStyleLoad = useCallback(() => {
-    console.log("Styles loading");
-      mapRef.current.setConfigProperty("basemap", "lightPreset", "dusk");
-      mapRef.current.setConfigProperty("basemap", "showPlaceLabels", false);
-      mapRef.current.setConfigProperty("basemap", "showRoadLabels", false);
-      mapRef.current.setConfigProperty("basemap", "showPointOfInterestLabels", false);
-      mapRef.current.setConfigProperty("basemap", "showTransitLabels", false);
-
-      // Add markers and popups for movie locations
-      movieLocations.forEach((movie) => {
-        movie.locations.forEach((location) => {
-          const markerEl = document.createElement("div");
-          markerEl.className = "cursor-pointer";
-          markerEl.textContent = "📍";
-          markerEl.style.fontSize = "2.5em";
-
-          new mapboxgl.Marker(markerEl)
-            .setLngLat([location.lng, location.lat])
-            .addTo(mapRef.current);
-
-          markerEl.addEventListener("click", () => {
-            dispatch(setSelectedMovie({
-              ...movie,
-              name: location.name,
-              lat: location.lat,
-              lng: location.lng,
-              imageUrl: location.imageUrl,
-              locationImg: location.locationImg,
-            }));
-          });
-        });
-      });
-  }, []);
-
   useEffect(() => {
     console.log("useEffect running");      
     // Initialize the map only if it's not already created
@@ -74,7 +40,56 @@ const MapComponent = () => {
         pitch: 62,
         center: [2.29392, 48.85934],
       });
-      mapRef.current.on("style.load", handleStyleLoad);
+      mapRef.current.on("load", () => {
+        mapRef.current.setConfigProperty("basemap", "lightPreset", "dusk");
+        mapRef.current.setConfigProperty("basemap", "showPlaceLabels", false);
+        mapRef.current.setConfigProperty("basemap", "showRoadLabels", false);
+        mapRef.current.setConfigProperty("basemap", "showPointOfInterestLabels", false);
+        mapRef.current.setConfigProperty("basemap", "showTransitLabels", false);
+  
+        mapRef.current.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', (error, image) => {
+          if (error) {
+              console.error("Error loading pin image:", error);
+              return;
+          }
+          mapRef.current.addImage('cat', image);
+      });
+            // Add markers and popups for movie locations
+        mapRef.current.addSource('movie-location', {
+            type: 'geojson',
+            data: movieLocations
+          });
+  
+    
+        mapRef.current.addLayer({
+          id: 'movie-location',
+          type: 'symbol',
+          source: 'movie-location',
+          layout: {
+            'icon-image': 'cat',
+            'icon-size': 0.25,
+          }
+        });
+
+        mapRef.current.on('styleimagemissing', function(e) {
+          var id = e.id;
+          if (id === 'cat') {
+              mapRef.current.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', (error, image) => {
+                  if (error) {
+                      console.error("Error loading pin image:", error);
+                      return;
+                  }
+                  mapRef.current.addImage('cat', image);
+              });
+          }
+      });
+    
+        // Handle click event on the layer
+        mapRef.current.on('click', 'movie-locations', (e) => {
+          const properties = e.features[0].properties;
+          dispatch(setSelectedMovie(properties));
+        });
+      });
     }
 
     return () => {
@@ -83,9 +98,10 @@ const MapComponent = () => {
         mapRef.current = null;
       }
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
+    console.log('Navigating useEffect')
     switch (type) {
       case "coordinates":
         mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 16 });
@@ -106,6 +122,5 @@ const MapComponent = () => {
       </button>)}
     </div>
   );
-};
-
+}
 export default MapComponent;
