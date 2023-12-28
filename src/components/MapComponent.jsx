@@ -64,43 +64,36 @@ const MapComponent = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Initilizing map')
+    console.log("useEffect running");      
     // Initialize the map only if it's not already created
     if (!mapRef.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/standard-beta",
-        zoom: 16,
+        zoom: 14,
         pitch: 62,
-        center: [2.29392, 48.85934]
+        center: [2.29392, 48.85934],
       });
-  
-    mapRef.current.on("style.load", handleStyleLoad);
+      mapRef.current.on("style.load", handleStyleLoad);
     }
-  
+
     return () => {
-      console.log('Removing map instance')
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, []); // Empty dependency array for running once on mount
+  }, []);
 
   useEffect(() => {
-    console.log('Navigation logic')
-    if (!mapRef.current) return;
-  
     switch (type) {
       case "coordinates":
-        console.log('Coordinates switch case')
         mapRef.current.flyTo({ center: [coordinates.lng, coordinates.lat], zoom: 16 });
         break;
       default:
-        console.log('Default switch case')
         mapRef.current.flyTo({ center: [2.29392, 48.85934], zoom: 16 });
     }
-  }, [type, coordinates, city]);
+  },[type, coordinates, city])
 
   return (
     <div>
