@@ -29,19 +29,8 @@ const MapComponent = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("useEffect running");      
-    // Initialize the map only if it's not already created
-    if (!mapRef.current) {
-      mapRef.current = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: "mapbox://styles/mapbox/standard-beta",
-        zoom: 14,
-        pitch: 62,
-        center: [2.29392, 48.85934],
-      });
-      mapRef.current.on("load", () => {
-        mapRef.current.setConfigProperty("basemap", "lightPreset", "dusk");
+  const handleStyleLoad = () => {
+    mapRef.current.setConfigProperty("basemap", "lightPreset", "dusk");
         mapRef.current.setConfigProperty("basemap", "showPlaceLabels", false);
         mapRef.current.setConfigProperty("basemap", "showRoadLabels", false);
         mapRef.current.setConfigProperty("basemap", "showPointOfInterestLabels", false);
@@ -70,35 +59,36 @@ const MapComponent = () => {
             'icon-size': 0.25,
           }
         });
-
-        mapRef.current.on('styleimagemissing', function(e) {
-          var id = e.id;
-          if (id === 'cat') {
-              mapRef.current.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', (error, image) => {
-                  if (error) {
-                      console.error("Error loading pin image:", error);
-                      return;
-                  }
-                  mapRef.current.addImage('cat', image);
-              });
-          }
-      });
     
         // Handle click event on the layer
         mapRef.current.on('click', 'movie-locations', (e) => {
           const properties = e.features[0].properties;
           dispatch(setSelectedMovie(properties));
         });
+      }
+
+  useEffect(() => {
+    console.log("useEffect running");      
+    // Initialize the map only if it's not already created
+    if (!mapRef.current) {
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: "mapbox://styles/mapbox/standard-beta",
+        zoom: 14,
+        pitch: 62,
+        center: [2.29392, 48.85934],
       });
+      mapRef.current.on("load", handleStyleLoad)
     }
 
     return () => {
       if (mapRef.current) {
+        mapRef.current.off('style.load', handleStyleLoad);
         mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, [dispatch]);
+  }, [handleStyleLoad, dispatch]);
 
   useEffect(() => {
     console.log('Navigating useEffect')
