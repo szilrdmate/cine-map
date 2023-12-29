@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
+import { removeFavoriteMovie } from '../utils/store';
 
 const FavoriteItem = ({ favorite, movie }) => {
   const dispatch = useDispatch();
@@ -14,13 +14,10 @@ const FavoriteItem = ({ favorite, movie }) => {
 
   const handleFavoriteClick = () => {
     const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
-  
     if (isFavorite) {
       dispatch(removeFavoriteMovie(movie));
-    } else {
-      dispatch(addFavoriteMovie(movie));
     }
-  };
+  }
 
   if (!favorite || !favorite.properties || !favorite.geometry) {
     return null;

@@ -7,9 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 
 const Home = () => {
   const { city } = useParams();
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 768px)'
-  });
+  const isDesktop = useMediaQuery( {query: '(min-width: 768px)'} );
 
   const defaultCity = 'paris';
   const currentCity = city || defaultCity;

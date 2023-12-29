@@ -6,7 +6,7 @@ import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons'; // 
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons'; // Import the solid star
 import { useState } from 'react';
 import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../utils/store';
-import "./keyframes.css"
+import "../styles/keyframes.css"
 import { useDispatch, useSelector } from 'react-redux';
 
 const MovieCard = ({ movie, onClose }) => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import cityCoordinates from "../utils/cities";
-import { setMapCoordinates } from "../utils/mapActions";
+import { setMapCoordinates } from "../utils/store.js";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { useMediaQuery } from 'react-responsive';
@@ -36,6 +36,7 @@ const Navbar = () => {
       if (data.features && data.features.length > 0) {
         const coordinates = data.features[0].geometry.coordinates;
         if (coordinates) {
+          console.log('Going places')
           dispatch({
             type: "SET_COORDINATES",
             payload: { lng: coordinates[0], lat: coordinates[1] },
