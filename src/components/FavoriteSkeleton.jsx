@@ -3,9 +3,7 @@
 const FavoriteSkeleton = () => {
         return (
             <div>
-                <div className="h-24 w-12 bg-teal-950 rounded-xl shadow-2xl overflow-hidden relative text-white max-w-xs mx-auto">
-                    <h1>hello</h1>
-                </div>
+                <div className="w-full aspect-[1/1.25] bg-teal-950 rounded-xl shadow-2xl overflow-hidden relative text-white max-w-3xl mx-auto flex items-center justify-center"><p className="text-gray-400 font-medium">Add your favorite movies</p></div>
             </div>
         );
     }

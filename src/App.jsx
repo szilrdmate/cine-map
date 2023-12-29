@@ -5,6 +5,7 @@ import { addFavoriteMovie } from "./utils/store";
 import Navbar from "./components/Navbar";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound"
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />}/>
             <Route path="/:city" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
       </div>
     </Router>

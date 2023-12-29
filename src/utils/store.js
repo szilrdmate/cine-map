@@ -35,6 +35,7 @@ export const setSelectedMovie = (movie) => ({
   payload: movie,
 });
 
+
 // Reducer
 function mapReducer(state = initialState, action) {
   switch (action.type) {
