@@ -1,12 +1,13 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { removeFavoriteMovie } from '../utils/store';
 
-const FavoriteItem = ({ favorite, movie }) => {
+const FavoriteItem = ({ favorite }) => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.city.favorites);
+  const favorites = useSelector((state) => state.city.favorites)
 
   const truncate = (str, num) => {
     return str.length > num ? str.slice(0, num) + '...' : str;
@@ -15,7 +16,7 @@ const FavoriteItem = ({ favorite, movie }) => {
   const handleFavoriteClick = () => {
     const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
     if (isFavorite) {
-      dispatch(removeFavoriteMovie(movie));
+      dispatch(removeFavoriteMovie(favorite));
     }
   }
 

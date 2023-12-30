@@ -23,8 +23,6 @@ const MovieCard = ({ movie, onClose }) => {
   };  
 
   const handleFavoriteClick = () => {
-    const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
-  
     if (isFavorite) {
       dispatch(removeFavoriteMovie(movie));
     } else {
