@@ -1,5 +1,5 @@
 // src/utils/addData.js
-import db from './fireBaseConfig.js';
+import db from '../utils/fireBaseConfig.js';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 

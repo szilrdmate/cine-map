@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import movieLocations from "../utils/geoJson.json";
+import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../utils/store.js";
 
@@ -39,6 +39,7 @@ const MapComponent = () => {
   }, []);
 
   const handleEventListeners = useCallback(() => {
+    console.log('Handling event listener')
     // Event handler for clicking on a cluster
     map.current.on("click", "clusters", (e) => {
       const features = map.current.queryRenderedFeatures(e.point, {
@@ -86,11 +87,13 @@ const MapComponent = () => {
   }, [dispatch]);
 
   const handleLayerLoad = useCallback(() => {
+    console.log('Handling layer load');
     map.current.loadImage("marker_red.png", (error, image) => {
       if (error) throw error;
 
       // Add the image to the map style
       map.current.addImage("custom-marker", image);
+      console.log('Image added')
 
       map.current.addSource("movies", {
         type: "geojson",
@@ -150,6 +153,7 @@ const MapComponent = () => {
 
     // Cleanup function to remove the map
     return () => {
+      console.log("Removing map instance")
       if (map.current) {
         map.current.remove();
         map.current = null;

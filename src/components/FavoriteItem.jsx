@@ -1,11 +1,11 @@
-/* eslint-disable no-undef */
+// src/components/FavoriteItem.jsx
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { removeFavoriteMovie } from '../utils/store';
 
-const FavoriteItem = ({ favorite }) => {
+const FavoriteItem = ({ favorite, movie }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.city.favorites)
 
@@ -13,6 +13,7 @@ const FavoriteItem = ({ favorite }) => {
     return str.length > num ? str.slice(0, num) + '...' : str;
   };
 
+  // TODO: Refactor handleFavoriteClick so it doesn't remove entire array & export
   const handleFavoriteClick = () => {
     const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
     if (isFavorite) {
