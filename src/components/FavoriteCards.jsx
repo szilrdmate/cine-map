@@ -10,7 +10,7 @@ const FavoriteCards = () => {
   };
 
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 md:gap-4 max-w-6xl px-4 mx-auto relative top-32 md:top-40 pb-28 md:pb-10">
+    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 md:gap-4 max-w-6xl px-4 mx-auto pt-40 pb-20">
       {favorites && favorites.length > 0 ? (
         favorites.map(favorite => (
           // Assuming each favorite has a unique title

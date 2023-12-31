@@ -34,13 +34,13 @@ const FavoriteItem = ({ favorite, movie }) => {
         <img src={favorite.properties.imageUrl} alt={favorite.properties.title} className="w-full h-auto aspect-video object-cover" />
       )}
       <div className="p-4">
-        <h2 className="font-bold text-3xl mb-4">{truncate(favorite.properties.title, 25)}</h2>
+        <h2 className="font-bold text-xl mb-4">{truncate(favorite.properties.title, 20)}</h2>
         {favorite.properties.locationImg && (
           <img src={favorite.properties.locationImg} alt={favorite.properties.title} className="rounded-xl w-full h-48 object-cover mb-4 shadow-xl" />
         )}
         <div className="flex justify-between text-sm font-medium">    
           <p>{favorite.properties.name}</p>
-          <p>{parseFloat(favorite.geometry.coordinates[0]).toFixed(2)}°, {parseFloat(favorite.geometry.coordinates[1]).toFixed(2)}°</p>
+          <p>{parseFloat(favorite.geometry.coordinates[0]).toFixed(2)}° {parseFloat(favorite.geometry.coordinates[1]).toFixed(2)}°</p>
         </div>
       </div>
     </div>

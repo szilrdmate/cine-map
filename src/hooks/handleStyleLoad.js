@@ -2,21 +2,21 @@ import { setSelectedMovie } from "../utils/store";
 
 export const handleStyleLoad = (map, movieLocations, dispatch) => {
   console.log("Styles loading");
-  map.current.setConfigProperty("basemap", "lightPreset", "dusk");
-  map.current.setConfigProperty("basemap", "showPlaceLabels", false);
-  map.current.setConfigProperty("basemap", "showRoadLabels", false);
-  map.current.setConfigProperty("basemap", "showPointOfInterestLabels", false);
-  map.current.setConfigProperty("basemap", "showTransitLabels", false);
+  map.setConfigProperty("basemap", "lightPreset", "dusk");
+  map.setConfigProperty("basemap", "showPlaceLabels", false);
+  map.setConfigProperty("basemap", "showRoadLabels", false);
+  map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
+  map.setConfigProperty("basemap", "showTransitLabels", false);
 
   console.log('Handling layer load');
-  map.current.loadImage("marker_red.png", (error, image) => {
+  map.loadImage("marker_red.png", (error, image) => {
     if (error) throw error;
 
     // Add the image to the map style
-    map.current.addImage("custom-marker", image);
+    map.addImage("custom-marker", image);
     console.log('Image added')
 
-    map.current.addSource("movies", {
+    map.addSource("movies", {
       type: "geojson",
       data: movieLocations,
       cluster: true,
@@ -25,7 +25,7 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
     });
 
     // Add a layer for the clusters themselves
-    map.current.addLayer({
+    map.addLayer({
       id: "clusters",
       type: "symbol",
       source: "movies",
@@ -37,7 +37,7 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
     });
 
     // Add a layer for the unclustered markers
-    map.current.addLayer({
+    map.addLayer({
       id: "unclustered-markers",
       type: "symbol",
       source: "movies",
@@ -49,16 +49,16 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
     });
     console.log('Handling event listener')
   // Event handler for clicking on a cluster
-  map.current.on("click", "clusters", (e) => {
-    const features = map.current.queryRenderedFeatures(e.point, {
+  map.on("click", "clusters", (e) => {
+    const features = map.queryRenderedFeatures(e.point, {
       layers: ["clusters"],
     });
     const clusterId = features[0].properties.cluster_id;
-    map.current
+    map
       .getSource("movies")
       .getClusterExpansionZoom(clusterId, (err, zoom) => {
         if (err) return;
-        map.current.easeTo({
+        map.easeTo({
           center: features[0].geometry.coordinates,
           zoom: zoom,
         });
@@ -66,7 +66,7 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
   });
 
   // Event handler for clicking on individual markers
-  map.current.on("click", "unclustered-markers", (e) => {
+  map.on("click", "unclustered-markers", (e) => {
     const feature = e.features[0];
     const serializableFeature = {
       // Copy only the properties you need
@@ -80,17 +80,17 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
   });
 
   // Add the 'pointer' cursor style on hover over the clusters
-  map.current.on("mouseenter", "clusters", () => {
-    map.current.getCanvas().style.cursor = "pointer";
+  map.on("mouseenter", "clusters", () => {
+    map.getCanvas().style.cursor = "pointer";
   });
-  map.current.on("mouseenter", "unclustered-markers", () => {
-    map.current.getCanvas().style.cursor = "pointer";
+  map.on("mouseenter", "unclustered-markers", () => {
+    map.getCanvas().style.cursor = "pointer";
   });
-  map.current.on("mouseleave", "clusters", () => {
-    map.current.getCanvas().style.cursor = "";
+  map.on("mouseleave", "clusters", () => {
+    map.getCanvas().style.cursor = "";
   });
-  map.current.on("mouseleave", "unclustered-markers", () => {
-    map.current.getCanvas().style.cursor = "";
+  map.on("mouseleave", "unclustered-markers", () => {
+    map.getCanvas().style.cursor = "";
   });
   })
 };
