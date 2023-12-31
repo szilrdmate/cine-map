@@ -56,6 +56,7 @@ const MapComponent = () => {
     };
   }, [dispatch]);
 
+
   // Handle city location changes
   useEffect(() => {
     switch (type) {

@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+// TODO: use slicing to optimize store
+
 // Redux State
 const initialState = {
   location: {
@@ -35,6 +37,11 @@ export const toggleFavoriteOpen = () => ({
   type: 'TOGGLE_FAVORITE_OPEN',
 });
 
+export const setFavoriteOpen = (isOpen) => ({
+  type: 'SET_FAVORITE_OPEN',
+  payload: isOpen,
+});
+
 
 // Reducer
 function mapReducer(state = initialState, action) {
@@ -50,7 +57,9 @@ function mapReducer(state = initialState, action) {
     case 'SET_SELECTED_MOVIE':
         return { ...state, selectedMovie: action.payload };
     case 'TOGGLE_FAVORITE_OPEN':
-        return { ...state, favoriteOpen: !state.favoriteOpen }; 
+        return { ...state, favoriteOpen: !state.favoriteOpen };
+    case 'SET_FAVORITE_OPEN':
+        return { ...state, favoriteOpen: action.payload };  
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { toggleFavoriteOpen } from "../utils/store.js"
+import { toggleFavoriteOpen, setFavoriteOpen } from "../utils/store.js"
 
 const DesktopNav = ({
   searchQuery,
@@ -22,11 +22,15 @@ const DesktopNav = ({
       dispatch(toggleFavoriteOpen());
     }
 
+    const handleMapLinkClick = () => {
+      dispatch(setFavoriteOpen(false)); // Dispatch the new action with false
+    };
+
   return (
     <div id="desktop-nav" className='bg-white shadow-2xl rounded-3xl absolute z-20 w-full h-24'>
       <div className='px-8 w-full h-full flex justify-between items-center'>
         <div className='flex space-x-7'>
-          <Link to='/' className='flex items-center'>
+          <Link onClick={handleMapLinkClick} to='/' className='flex items-center'>
             <img src='/logo.svg' alt='Logo' className='h-10 w-auto' />
           </Link>
         </div>
@@ -34,6 +38,7 @@ const DesktopNav = ({
         <div className='hidden md:flex items-center lg:space-x-8 space-x-2'>
           <Link
             to='/'
+            onClick={handleMapLinkClick}
             className='lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300'>
             Map
           </Link>
@@ -56,14 +61,22 @@ const DesktopNav = ({
                 <Link
                   to='/paris'
                   className='block py-2 px-4 text-sm hover:bg-gray-200'
-                  onClick={() => handleExploreLinkClick(cityCoordinates.paris)}>
+                  onClick={() =>
+                    [
+                    handleMapLinkClick(),
+                    handleExploreLinkClick(cityCoordinates.paris)
+                    ]
+                  }>
                   Paris
                 </Link>
                 <Link
                   to='/london'
                   className='block py-2 px-4 text-sm hover:bg-gray-200'
                   onClick={() =>
+                    [
+                    handleMapLinkClick(),
                     handleExploreLinkClick(cityCoordinates.london)
+                    ]
                   }>
                   London
                 </Link>
@@ -71,7 +84,10 @@ const DesktopNav = ({
                   to='/budapest'
                   className='block py-2 px-4 text-sm hover:bg-gray-200'
                   onClick={() =>
+                    [
+                      handleMapLinkClick(),
                     handleExploreLinkClick(cityCoordinates.budapest)
+                  ]
                   }>
                   Budapest
                 </Link>
@@ -79,7 +95,10 @@ const DesktopNav = ({
                   to='/newyork'
                   className='block py-2 px-4 text-sm hover:bg-gray-200'
                   onClick={() =>
+                    [
+                    handleMapLinkClick(),
                     handleExploreLinkClick(cityCoordinates.newyork)
+                    ]
                   }>
                   New York
                 </Link>
