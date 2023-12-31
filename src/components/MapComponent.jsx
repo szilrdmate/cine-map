@@ -24,22 +24,55 @@ const MapComponent = () => {
   // Hook to dispatch Redux actions
   const dispatch = useDispatch();
 
-  // Callback to handle style load event, also use callback so it only executes once
+  // Callback to handle style load, event listeners, layers
   const handleStyleLoad = useCallback(() => {
     console.log("Styles loading");
     map.current.setConfigProperty("basemap", "lightPreset", "dusk");
     map.current.setConfigProperty("basemap", "showPlaceLabels", false);
     map.current.setConfigProperty("basemap", "showRoadLabels", false);
-    map.current.setConfigProperty(
-      "basemap",
-      "showPointOfInterestLabels",
-      false
-    );
+    map.current.setConfigProperty("basemap", "showPointOfInterestLabels", false);
     map.current.setConfigProperty("basemap", "showTransitLabels", false);
-  }, []);
 
-  const handleEventListeners = useCallback(() => {
-    console.log('Handling event listener')
+    console.log('Handling layer load');
+    map.current.loadImage("marker_red.png", (error, image) => {
+      if (error) throw error;
+
+      // Add the image to the map style
+      map.current.addImage("custom-marker", image);
+      console.log('Image added')
+
+      map.current.addSource("movies", {
+        type: "geojson",
+        data: movieLocations,
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom level to cluster points
+        clusterRadius: 50, // Radius of each cluster when clustering points
+      });
+
+      // Add a layer for the clusters themselves
+      map.current.addLayer({
+        id: "clusters",
+        type: "symbol",
+        source: "movies",
+        filter: ["has", "point_count"], // Filter for cluster points
+        layout: {
+          "icon-image": "custom-marker", // Use the same custom marker icon for clusters
+          "icon-size": 1.5,
+        },
+      });
+
+      // Add a layer for the unclustered markers
+      map.current.addLayer({
+        id: "unclustered-markers",
+        type: "symbol",
+        source: "movies",
+        filter: ["!", ["has", "point_count"]], // Filter for non-cluster points
+        layout: {
+          "icon-image": "custom-marker", // Use a custom marker icon
+          "icon-size": 1.5,
+        },
+      });
+      console.log('Handling event listener')
     // Event handler for clicking on a cluster
     map.current.on("click", "clusters", (e) => {
       const features = map.current.queryRenderedFeatures(e.point, {
@@ -84,51 +117,8 @@ const MapComponent = () => {
     map.current.on("mouseleave", "unclustered-markers", () => {
       map.current.getCanvas().style.cursor = "";
     });
+    })
   }, [dispatch]);
-
-  const handleLayerLoad = useCallback(() => {
-    console.log('Handling layer load');
-    map.current.loadImage("marker_red.png", (error, image) => {
-      if (error) throw error;
-
-      // Add the image to the map style
-      map.current.addImage("custom-marker", image);
-      console.log('Image added')
-
-      map.current.addSource("movies", {
-        type: "geojson",
-        data: movieLocations,
-        cluster: true,
-        clusterMaxZoom: 14, // Max zoom level to cluster points
-        clusterRadius: 50, // Radius of each cluster when clustering points
-      });
-
-      // Add a layer for the clusters themselves
-      map.current.addLayer({
-        id: "clusters",
-        type: "symbol",
-        source: "movies",
-        filter: ["has", "point_count"], // Filter for cluster points
-        layout: {
-          "icon-image": "custom-marker", // Use the same custom marker icon for clusters
-          "icon-size": 1.5,
-        },
-      });
-
-      // Add a layer for the unclustered markers
-      map.current.addLayer({
-        id: "unclustered-markers",
-        type: "symbol",
-        source: "movies",
-        filter: ["!", ["has", "point_count"]], // Filter for non-cluster points
-        layout: {
-          "icon-image": "custom-marker", // Use a custom marker icon
-          "icon-size": 1.5,
-        },
-      });
-      handleEventListeners();
-    });
-  }, [handleEventListeners]);
 
   // useEffect to initialize the map
   useEffect(() => {
@@ -148,7 +138,6 @@ const MapComponent = () => {
     // map.current.on("style.load", handleStyleLoad);
     map.current.on("style.load", () => {
       handleStyleLoad();
-      handleLayerLoad();
     });
 
     // Cleanup function to remove the map
@@ -159,7 +148,7 @@ const MapComponent = () => {
         map.current = null;
       }
     };
-  }, [handleLayerLoad, handleStyleLoad]);
+  }, [handleStyleLoad]);
 
   // Handle city location changes
   useEffect(() => {
