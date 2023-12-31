@@ -2,6 +2,8 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { toggleFavoriteOpen } from "../utils/store.js"
 
 const DesktopNav = ({
   searchQuery,
@@ -12,7 +14,13 @@ const DesktopNav = ({
   handleExploreLinkClick,
   cityCoordinates,
 }) => {
-    const dropdownIcon = isDropdownOpen ? faCaretUp : faCaretDown;
+    const dropdownIcon = isDropdownOpen ? faCaretUp : faCaretDown
+
+    const dispatch = useDispatch();
+
+    const handleToggleFavorites = () => {
+      dispatch(toggleFavoriteOpen());
+    }
 
   return (
     <div id="desktop-nav" className='bg-white shadow-2xl rounded-3xl absolute z-20 w-full h-24'>
@@ -80,7 +88,7 @@ const DesktopNav = ({
           </div>
 
           <Link
-            to='/favorites'
+            onClick={handleToggleFavorites}
             className='lg:text-2xl text-xl px-2 text-gray-800 font-semibold hover:text-teal-900 transition duration-300'>
             Favorites
           </Link>

@@ -2,8 +2,17 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faGlobe, faCompass, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { toggleFavoriteOpen } from "../utils/store.js"
 
 const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, isDropdownOpen, setIsDropdownOpen, handleExploreLinkClick, cityCoordinates }) => {
+
+  const dispatch = useDispatch()
+
+  const handleToggleFavorites = () => {
+    dispatch(toggleFavoriteOpen());
+  }
+
   return (
     <div id="mobile-nav">
       <div className="flex items-center fixed z-20 pt-4 px-4 w-full">
@@ -88,7 +97,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
           )}
         </div>
 
-        <Link to="/favorites">
+        <Link onClick={handleToggleFavorites}>
           <div className="h-full w-[33vw] flex justify-center items-center">
             <FontAwesomeIcon icon={faHeart} />
           </div>

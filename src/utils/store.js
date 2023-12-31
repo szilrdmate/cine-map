@@ -6,7 +6,8 @@ const initialState = {
     type: 'default', // 'coordinates' or 'movie'
     coordinates: { lat: 48.85934, lng: 2.29392 },
   },
-  favorites: [] // Array to store favorite movies
+  favorites: [], // Array to store favorite movies
+  favoriteOpen: false,
 };
 
 // Action Creators
@@ -30,6 +31,10 @@ export const setSelectedMovie = (movie) => ({
   payload: movie,
 });
 
+export const toggleFavoriteOpen = () => ({
+  type: 'TOGGLE_FAVORITE_OPEN',
+});
+
 
 // Reducer
 function mapReducer(state = initialState, action) {
@@ -44,6 +49,8 @@ function mapReducer(state = initialState, action) {
         return { ...state, favorites: state.favorites.filter(movie => movie.title !== action.payload.title) };
     case 'SET_SELECTED_MOVIE':
         return { ...state, selectedMovie: action.payload };
+    case 'TOGGLE_FAVORITE_OPEN':
+        return { ...state, favoriteOpen: !state.favoriteOpen }; 
     default:
       return state;
   }
