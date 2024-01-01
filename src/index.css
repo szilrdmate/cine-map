@@ -16,3 +16,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
       @apply text-gray-900 bg-gray-100 backdrop-blur-0;
     }
   }
+
+::-webkit-scrollbar {
+  width: 0px;
+}

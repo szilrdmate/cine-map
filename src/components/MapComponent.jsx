@@ -25,7 +25,6 @@ const MapComponent = () => {
   // Hook to dispatch Redux actions
   const dispatch = useDispatch();
 
-
   // useEffect to initialize the map
   useEffect(() => {
     console.log("useEffect running");
@@ -41,7 +40,7 @@ const MapComponent = () => {
       center: [2.29392, 48.85934],
     });
 
-    // map.current.on("style.load", handleStyleLoad);
+    // Adding styling to the map
     map.current.on("style.load", () => {
       handleStyleLoad(map.current, movieLocations, dispatch);
     });
