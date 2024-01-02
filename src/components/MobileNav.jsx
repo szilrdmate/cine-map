@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faGlobe, faCompass, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavoriteOpen, setFavoriteOpen } from "../utils/store.js"
+import { toggleFavoriteOpen, setFavoriteOpen } from "../redux/store.js"
 
 const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, isDropdownOpen, setIsDropdownOpen, handleExploreLinkClick, cityCoordinates }) => {
 

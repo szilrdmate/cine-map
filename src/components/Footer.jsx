@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedMovie, toggleFavoriteOpen } from '../utils/store.js';
+import { setSelectedMovie, toggleFavoriteOpen } from '../redux/store.js';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +25,7 @@ const Footer = () => {
         <div className="w-40 h-10 left-0 bg-teal-950 z-10 rounded-tr-2xl md:flex items-center justify-center">
           <Link className="text-white font-semibold text-2xl" onClick={handleToggleFavorites}>Favorites <FontAwesomeIcon className="text-base" icon={faChevronRight} /></Link>
         </div>
-        <div className="bg-teal-950 h-36 overflow-x-scroll flex items-center space-x-4 px-4">
+        <div className="bg-teal-950 overflow-x-scroll flex items-center space-x-4 pt-4 px-4">
           {favorites.map((movie) => (
             <div key={movie.properties.title} onClick={() => handleMovieSelect(movie)} className="w-32 cursor-pointer">
               <div className="h-20 w-32 bg-teal-800 rounded-xl grid place-items-center mb-1 overflow-hidden">

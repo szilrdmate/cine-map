@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { toggleFavoriteOpen, setFavoriteOpen } from "../utils/store.js"
+import { toggleFavoriteOpen, setFavoriteOpen } from "../redux/store.js"
 
 const DesktopNav = ({
   searchQuery,

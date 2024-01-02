@@ -1,4 +1,4 @@
-import { setSelectedMovie } from "../utils/store";
+import { setSelectedMovie } from "../redux/store";
 let isSourceAndLayersAdded = false;
 let isHandleStyleLoadExecuted = false;
 
@@ -95,9 +95,6 @@ const addSourceAndLayers = (map, movieLocations) => {
     });
   }
 
-
-
-
 const setupEventListeners = (map, dispatch) => {
   // Event handler for clicking on a cluster
 
@@ -106,31 +103,35 @@ const setupEventListeners = (map, dispatch) => {
       const features = map.queryRenderedFeatures(e.point, {
         layers: ["clusters"],
       });
-      const clusterId = features[0].properties.cluster_id;
-      map
-        .getSource("movies")
-        .getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err) return;
-          map.easeTo({
-            center: features[0].geometry.coordinates,
-            zoom: zoom,
+      if (features.length > 0) {
+        const clusterId = features[0].properties.cluster_id;
+        map
+          .getSource("movies")
+          .getClusterExpansionZoom(clusterId, (err, zoom) => {
+            if (err) return;
+            map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom,
+            });
           });
-        });
+      }
     });
 
 
   // Event handler for clicking on individual markers
 
     map.on("click", "unclustered-markers", (e) => {
-      const feature = e.features[0];
-      const serializableFeature = {
-        id: feature.id,
-        type: feature.type,
-        geometry: feature.geometry,
-        properties: feature.properties,
-      };
-      console.log("Marker clicked, dispatching movie:", feature);
-      dispatch(setSelectedMovie(serializableFeature));
+      if (e.features.length > 0) {
+        const feature = e.features[0];
+        const serializableFeature = {
+          id: feature.id,
+          type: feature.type,
+          geometry: feature.geometry,
+          properties: feature.properties,
+        };
+        console.log("Marker clicked, dispatching movie:", feature);
+        dispatch(setSelectedMovie(serializableFeature));
+      }
     });
 
 

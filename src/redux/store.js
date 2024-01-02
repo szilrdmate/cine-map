@@ -1,18 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-// TODO: use slicing to optimize store
-
-// Redux State
 const initialState = {
   location: {
-    type: 'default', // 'coordinates' or 'movie'
+    type: 'default',
     coordinates: { lat: 48.85934, lng: 2.29392 },
   },
-  favorites: [], // Array to store favorite movies
+  favorites: [],
   favoriteOpen: false,
 };
 
-// Action Creators
 export const addFavoriteMovie = (movie) => ({
   type: 'ADD_FAVORITE_MOVIE',
   payload: movie,
@@ -42,8 +38,6 @@ export const setFavoriteOpen = (isOpen) => ({
   payload: isOpen,
 });
 
-
-// Reducer
 function mapReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_LOCATION':
@@ -51,21 +45,20 @@ function mapReducer(state = initialState, action) {
     case 'SET_COORDINATES':
       return { ...state, location: { type: 'coordinates', coordinates: action.payload }};
     case 'ADD_FAVORITE_MOVIE':
-        return { ...state, favorites: [...state.favorites, action.payload] };
+      return { ...state, favorites: [...state.favorites, action.payload] };
     case 'REMOVE_FAVORITE_MOVIE':
-        return { ...state, favorites: state.favorites.filter(movie => movie.properties.title !== action.payload.properties.title) };
+      return { ...state, favorites: state.favorites.filter(movie => movie.properties.title !== action.payload.properties.title) };
     case 'SET_SELECTED_MOVIE':
-        return { ...state, selectedMovie: action.payload };
+      return { ...state, selectedMovie: action.payload };
     case 'TOGGLE_FAVORITE_OPEN':
-        return { ...state, favoriteOpen: !state.favoriteOpen };
+      return { ...state, favoriteOpen: !state.favoriteOpen };
     case 'SET_FAVORITE_OPEN':
-        return { ...state, favoriteOpen: action.payload };  
+      return { ...state, favoriteOpen: action.payload };  
     default:
       return state;
   }
 }
 
-// Configure and export the store
 const store = configureStore({
   reducer: {
     city: mapReducer,

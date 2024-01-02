@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
+import { removeFavoriteMovie, addFavoriteMovie } from '../redux/store';
 
 const FavoriteItem = ({ favorite }) => {
   const dispatch = useDispatch();

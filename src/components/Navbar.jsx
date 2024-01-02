@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import cityCoordinates from "../data/cities";
-import { setMapCoordinates } from "../utils/store.js";
+import { setMapCoordinates } from "../redux/store.js";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { useMediaQuery } from 'react-responsive';
