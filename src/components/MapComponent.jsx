@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleStyleLoad } from "../hooks/handleStyleLoad.js"
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
@@ -25,13 +25,13 @@ const MapComponent = () => {
   // Hook to dispatch Redux actions
   const dispatch = useDispatch();
 
-
   // useEffect to initialize the map
   useEffect(() => {
-    console.log("useEffect running");
 
     // Initialize the map only if it's not already created
     if (map.current) return;
+
+    console.log("useEffect running");
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -41,7 +41,7 @@ const MapComponent = () => {
       center: [2.29392, 48.85934],
     });
 
-    // map.current.on("style.load", handleStyleLoad);
+    // Adding styling to the map
     map.current.on("style.load", () => {
       handleStyleLoad(map.current, movieLocations, dispatch);
     });
@@ -55,6 +55,7 @@ const MapComponent = () => {
       }
     };
   }, [dispatch]);
+
 
   // Handle city location changes
   useEffect(() => {

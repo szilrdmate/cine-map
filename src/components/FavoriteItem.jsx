@@ -3,27 +3,37 @@
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { removeFavoriteMovie } from '../utils/store';
+import { removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
 
-const FavoriteItem = ({ favorite, movie }) => {
+const FavoriteItem = ({ favorite }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.city.favorites)
+
+  const handleFavoriteClick = () => {
+    // Ensure the favorite and its properties exist
+    if (!favorite || !favorite.properties) {
+      console.error("Invalid favorite object:", favorite);
+      return;
+    }
+  
+    const favoriteTitle = favorite.properties.title;
+  
+    // Check if the favorite is already in favorites
+    const isFavorite = favorites.some(favMovie => favMovie.properties.title === favoriteTitle);
+  
+    if (isFavorite) {
+      // Remove the favorite from favorites
+      dispatch(removeFavoriteMovie(favorite));
+    } else {
+      // This else part may not be necessary if this component only deals with favorites
+      // Add the favorite to favorites (consider if this is really needed)
+      dispatch(addFavoriteMovie(favorite));
+    }
+  };
 
   const truncate = (str, num) => {
     return str.length > num ? str.slice(0, num) + '...' : str;
   };
-
-  // TODO: Refactor handleFavoriteClick so it doesn't remove entire array & export
-  const handleFavoriteClick = () => {
-    const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
-    if (isFavorite) {
-      dispatch(removeFavoriteMovie(favorite));
-    }
-  }
-
-  if (!favorite || !favorite.properties || !favorite.geometry) {
-    return null;
-  }
 
   return (
     <div className="bg-teal-950 rounded-xl shadow-2xl overflow-hidden relative text-white max-w-xs mx-auto">

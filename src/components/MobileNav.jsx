@@ -2,8 +2,27 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faGlobe, faCompass, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavoriteOpen, setFavoriteOpen } from "../utils/store.js"
 
 const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, isDropdownOpen, setIsDropdownOpen, handleExploreLinkClick, cityCoordinates }) => {
+
+  const dispatch = useDispatch()
+
+  const favoriteOpen = useSelector((state) => state.city.favoriteOpen);
+
+  const handleToggleFavorites = () => {
+    dispatch(toggleFavoriteOpen());
+  }
+
+  const handleMapLinkClick = () => {
+    // Check if favoriteOpen is true, then dispatch the action
+    if (favoriteOpen) {
+      dispatch(setFavoriteOpen(false));
+      console.log('Favorite panel closed'); 
+    }
+  };
+
   return (
     <div id="mobile-nav">
       <div className="flex items-center fixed z-20 pt-4 px-4 w-full">
@@ -35,7 +54,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
       </div>
 
       <div className="z-20 border-t-solid border-t-2 border-t-gray-300 fixed w-full h-20 bottom-0 left-0 text-4xl bg-white text-gray-900 flex justify-around md:hidden shadow-2xl  ">
-        <Link to="/">
+        <Link to="/" onClick={handleMapLinkClick}>
           <div className="h-full w-[33vw] flex justify-center items-center">
             <FontAwesomeIcon icon={faGlobe} />
           </div>
@@ -56,7 +75,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/paris"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => [handleExploreLinkClick(cityCoordinates.paris), setIsDropdownOpen(false)]}
+                onClick={() => [handleMapLinkClick(), handleExploreLinkClick(cityCoordinates.paris), setIsDropdownOpen(false)]}
               >
                 Paris
               </Link>
@@ -64,7 +83,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/london"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => [handleExploreLinkClick(cityCoordinates.london), setIsDropdownOpen(false)]}
+                onClick={() => [handleMapLinkClick(), handleExploreLinkClick(cityCoordinates.london), setIsDropdownOpen(false)]}
               >
                 London
               </Link>
@@ -72,7 +91,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/budapest"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => [handleExploreLinkClick(cityCoordinates.budapest), setIsDropdownOpen(false)]}
+                onClick={() => [handleMapLinkClick(), handleExploreLinkClick(cityCoordinates.budapest), setIsDropdownOpen(false)]}
               >
                 Budapest
               </Link>
@@ -80,7 +99,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
               <Link
                 to="/newyork"
                 className="block py-3 px-4 text-lg font-semibold hover:bg-gray-200"
-                onClick={() => [handleExploreLinkClick(cityCoordinates.newyork), setIsDropdownOpen(false)]}
+                onClick={() => [handleMapLinkClick(), handleExploreLinkClick(cityCoordinates.newyork), setIsDropdownOpen(false)]}
               >
                 New York
               </Link>
@@ -88,7 +107,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
           )}
         </div>
 
-        <Link to="/favorites">
+        <Link onClick={handleToggleFavorites}>
           <div className="h-full w-[33vw] flex justify-center items-center">
             <FontAwesomeIcon icon={faHeart} />
           </div>
