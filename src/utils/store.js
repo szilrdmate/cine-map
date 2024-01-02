@@ -53,7 +53,7 @@ function mapReducer(state = initialState, action) {
     case 'ADD_FAVORITE_MOVIE':
         return { ...state, favorites: [...state.favorites, action.payload] };
     case 'REMOVE_FAVORITE_MOVIE':
-        return { ...state, favorites: state.favorites.filter(movie => movie.title !== action.payload.title) };
+        return { ...state, favorites: state.favorites.filter(movie => movie.properties.title !== action.payload.properties.title) };
     case 'SET_SELECTED_MOVIE':
         return { ...state, selectedMovie: action.payload };
     case 'TOGGLE_FAVORITE_OPEN':

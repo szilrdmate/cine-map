@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleStyleLoad } from "../hooks/handleStyleLoad.js"
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
@@ -27,10 +27,11 @@ const MapComponent = () => {
 
   // useEffect to initialize the map
   useEffect(() => {
-    console.log("useEffect running");
 
     // Initialize the map only if it's not already created
     if (map.current) return;
+
+    console.log("useEffect running");
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
