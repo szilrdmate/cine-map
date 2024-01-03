@@ -1,22 +1,34 @@
 import { useState, useEffect } from 'react';
 
 const useLocalStorage = (key, initialValue) => {
-    // Retrieve the stored item or use the initial value if none is stored
-    const storedValue = localStorage.getItem(key);
-    const initial = storedValue ? JSON.parse(storedValue) : initialValue;
+    if (!key) {
+        throw new Error("Key must be provided to useLocalStorage hook");
+    }
 
-    // State to store the value
-    const [value, setValue] = useState(initial);
-
-    // Update local storage when the value changes
-    useEffect(() => {
-        if (value && value.length > 0) {
-            console.log("setItem in localStorage")
-            localStorage.setItem(key, JSON.stringify(value));
+    const readValueFromLocalStorage = () => {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            console.warn(`Error reading localStorage key “${key}”:`, error);
+            return initialValue;
         }
-    }, [key, value]);
+    };
 
-    return [value, setValue];
+    const [storedValue, setStoredValue] = useState(readValueFromLocalStorage);
+
+    useEffect(() => {
+        try {
+            const valueToStore = storedValue !== undefined ? JSON.stringify(storedValue) : null;
+            if (valueToStore !== null) {
+                localStorage.setItem(key, valueToStore);
+            }
+        } catch (error) {
+            console.error("Error setting item in local storage:", error);
+        }
+    }, [key, storedValue]);
+
+    return [storedValue, setStoredValue];
 };
 
 export default useLocalStorage;

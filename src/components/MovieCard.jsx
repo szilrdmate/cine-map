@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../redux/store';
 import "../styles/keyframes.css"
 import { useDispatch, useSelector } from 'react-redux';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const MovieCard = ({ movie, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -15,11 +16,17 @@ const MovieCard = ({ movie, onClose }) => {
   const favorites = useSelector((state) => state.city.favorites)
   const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
 
+  const [localFavorites, setLocalFavorites] = useLocalStorage('favorites', []);
+
   const handleFavoriteClick = () => {
     if (isFavorite) {
-      dispatch(removeFavoriteMovie(movie));
+      const updatedFavorites = localFavorites.filter(favMovie => favMovie.properties.title !== movie.properties.title);
+      setLocalFavorites(updatedFavorites); // Update local storage
+      dispatch(removeFavoriteMovie(movie)); // Update Redux state
     } else {
-      dispatch(addFavoriteMovie(movie));
+      const updatedFavorites = [...localFavorites, movie];
+      setLocalFavorites(updatedFavorites); // Update local storage
+      dispatch(addFavoriteMovie(movie)); // Update Redux state
     }
   };
 

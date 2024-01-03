@@ -1,4 +1,6 @@
 // src/utils/fireBaseConfig.js
+
+// TODO: add firbase to project + firestore
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; // Corrected import for Firestore
 
