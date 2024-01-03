@@ -38,6 +38,11 @@ export const setFavoriteOpen = (isOpen) => ({
   payload: isOpen,
 });
 
+export const setFavorites = (favorites) => ({
+  type: 'SET_FAVORITES',
+  payload: favorites,
+});
+
 function mapReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_LOCATION':
@@ -54,6 +59,8 @@ function mapReducer(state = initialState, action) {
       return { ...state, favoriteOpen: !state.favoriteOpen };
     case 'SET_FAVORITE_OPEN':
       return { ...state, favoriteOpen: action.payload };  
+    case 'SET_FAVORITES':
+      return { ...state, favorites: action.payload };
     default:
       return state;
   }
