@@ -1,11 +1,10 @@
 // src/utils/addData.js
 import db from '../utils/fireBaseConfig.js';
 import { collection, doc, setDoc } from 'firebase/firestore';
+import movieLocations from "../data/geoJson.json"
 
 
-const movieData = [
-
-  ]
+const movieData = movieLocations
 
   const addMoviesToFirestore = async () => {
     try {
