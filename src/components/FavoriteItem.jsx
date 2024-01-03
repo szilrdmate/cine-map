@@ -3,17 +3,17 @@
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { removeFavoriteMovie, addFavoriteMovie } from '../utils/store';
+import { removeFavoriteMovie, addFavoriteMovie } from '../redux/store';
 
 const FavoriteItem = ({ favorite }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.city.favorites)
 
   const handleFavoriteClick = () => {
-    // Ensure the favorite and its properties exist
-    if (!favorite || !favorite.properties) {
+    if (favorite && favorite.properties) {
+      dispatch(removeFavoriteMovie(favorite));
+    } else {
       console.error("Invalid favorite object:", favorite);
-      return;
     }
   
     const favoriteTitle = favorite.properties.title;
@@ -48,7 +48,7 @@ const FavoriteItem = ({ favorite }) => {
         {favorite.properties.locationImg && (
           <img src={favorite.properties.locationImg} alt={favorite.properties.title} className="rounded-xl w-full h-48 object-cover mb-4 shadow-xl" />
         )}
-        <div className="flex justify-between text-sm font-medium">    
+        <div className="flex justify-between text-sm text-gray-200 font-medium">    
           <p>{favorite.properties.name}</p>
           <p>{parseFloat(favorite.geometry.coordinates[0]).toFixed(2)}° {parseFloat(favorite.geometry.coordinates[1]).toFixed(2)}°</p>
         </div>

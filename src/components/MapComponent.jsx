@@ -7,7 +7,7 @@ import mapboxgl from 'mapbox-gl';
 import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
-import { setSelectedMovie } from "../utils/store.js";
+import { setSelectedMovie } from "../redux/store.js";
 
 // Mapbox token stored in as a .env variable
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;

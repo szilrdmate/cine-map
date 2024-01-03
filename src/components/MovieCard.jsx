@@ -5,9 +5,10 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons'; // Import the regular star
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons'; // Import the solid star
 import { useState } from 'react';
-import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../utils/store';
+import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../redux/store';
 import "../styles/keyframes.css"
 import { useDispatch, useSelector } from 'react-redux';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const MovieCard = ({ movie, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -15,18 +16,17 @@ const MovieCard = ({ movie, onClose }) => {
   const favorites = useSelector((state) => state.city.favorites)
   const isFavorite = favorites.some(favMovie => favMovie.properties.title === movie.properties.title);
 
-  const truncate = (str, num) => {
-    if (str.length > num) {
-      return str.slice(0, num) + '...';
-    }
-    return str;
-  };  
+  const [localFavorites, setLocalFavorites] = useLocalStorage('favorites', []);
 
   const handleFavoriteClick = () => {
     if (isFavorite) {
-      dispatch(removeFavoriteMovie(movie));
+      const updatedFavorites = localFavorites.filter(favMovie => favMovie.properties.title !== movie.properties.title);
+      setLocalFavorites(updatedFavorites); // Update local storage
+      dispatch(removeFavoriteMovie(movie)); // Update Redux state
     } else {
-      dispatch(addFavoriteMovie(movie));
+      const updatedFavorites = [...localFavorites, movie];
+      setLocalFavorites(updatedFavorites); // Update local storage
+      dispatch(addFavoriteMovie(movie)); // Update Redux state
     }
   };
 
@@ -59,7 +59,7 @@ const MovieCard = ({ movie, onClose }) => {
       </div>
       <div className='absolute top-0 left-0 max-w-[320px] w-full aspect-video bg-gradient-to-b from-black to-transparent opacity-50'></div>
       <div className="pt-4 px-2">
-        <h2 className="font-bold text-3xl mb-4">{truncate(movie.properties.title, 25)}</h2>
+        <h2 className="font-bold text-3xl mb-4">{movie.properties.title}</h2>
         <div>
           {movie.properties.locationImg && (
             <img src={movie.properties.locationImg} alt={movie.properties.title} className="rounded-xl max-w-[304px] w-full h-48 mx-auto object-cover mb-4 shadow-xl" />
