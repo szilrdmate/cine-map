@@ -38,9 +38,9 @@ An interactive Map appliacation built for movie enthusiasts. Explore your favori
 
 Before getting started, please ensure that you have the following third-party services set up:
 
-- [MapBoxGLJS](https://planetscale.com?ref=highstorm): Map
-- [Firebase](https://www.tinybird.co?ref=highstorm): Backend
-- [Firestore](https://upstash.com/qstash?ref=highstorm): Database
+- [MapBoxGLJS](https://mapbox.com/mapbox-gljs): Map
+- [Firebase](https://www.firebase.google.com/): Backend
+- [Firestore](https://firebase.google.com/firestore): Database
 
 ### Installation
 
