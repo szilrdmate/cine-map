@@ -1,8 +1,6 @@
 // src/components/MapComponent.jsx
 
 import { useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateRight, faRotateLeft, faCube, faMagnifyingGlassPlus, faMagnifyingGlassMinus } from "@fortawesome/free-solid-svg-icons"
 import { useDispatch, useSelector } from "react-redux";
 import { handleStyleLoad } from "../hooks/handleStyleLoad.js"
 import mapboxgl from 'mapbox-gl';
@@ -10,7 +8,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../redux/store.js";
-// import MapControls from "./MapControls.jsx";
+import MapControls from "./MapControls.jsx";
 
 // Mapbox token stored in as a .env variable
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -24,24 +22,6 @@ const MapComponent = () => {
   // Refs for map container and map instance
   const mapContainerRef = useRef(null);
   const map = useRef(null);
-
-  // functio to toggle between  2D and 3D
-  const toggle3DView = () => {
-    const currentPitch = map.current.getPitch();
-    map.current.easeTo({pitch: currentPitch === 0 ? 60 : 0});
-};
-
-// Functon to handle bearing change on map
-const rotateMap = (direction) => {
-    const bearing = map.current.getBearing();
-    map.current.easeTo({ bearing: bearing + (direction === 'right' ? -20 : 20) });
-}
-
-// Functon to handle pitch change on map
-const handleZoom = (dir) => {
-  const zoom = map.current.getZoom();
-  map.current.easeTo({ zoom: zoom + (dir === 'out' ? -0.5 : 0.5) });
-}
 
   // Hook to dispatch Redux actions
   const dispatch = useDispatch();
@@ -103,11 +83,7 @@ const handleZoom = (dir) => {
           onClose={() => dispatch(setSelectedMovie(null))}
         />
       )}
-      <button onClick={toggle3DView} className="absolute bottom-40 right-80 bg-white p-4 z-50"><FontAwesomeIcon icon={faCube} /></button>
-      <button onClick={() => rotateMap('left')} className="absolute bottom-40 right-40 bg-white p-4 z-50"><FontAwesomeIcon icon={faRotateRight} /></button>
-      <button onClick={() => rotateMap('right')} className="absolute bottom-40 right-10 bg-white p-4 z-50"><FontAwesomeIcon icon={faRotateLeft} /></button>
-      <button onClick={() => handleZoom('out')} className="absolute bottom-60 right-40 bg-white p-4 z-50"><FontAwesomeIcon icon={faMagnifyingGlassMinus} /></button>
-      <button onClick={() => handleZoom('in')} className="absolute bottom-60 right-10 bg-white p-4 z-50"><FontAwesomeIcon icon={faMagnifyingGlassPlus} /></button>
+      <MapControls map={map.curent}/>
     </div>
   );
 };
