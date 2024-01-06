@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateRight, faRotateLeft, faCube, faMagnifyingGlassPlus, faMagnifyingGlassMinus } from "@fortawesome/free-solid-svg-icons"
 
-const MapControls = (map) => {
+const MapControls = ( {map} ) => {
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
   // Functio to toggle between  2D and 3D
@@ -24,15 +25,13 @@ const handleZoom = (dir) => {
 } 
   return (
     isDesktop && (
-      <>
-        <div className="absolute bottom-40 right-6  z-50 grid grid-rows-2 grid-cols-3 overflow-hidden rounded-2xl">
+        <div className="shadow-2xl absolute bottom-40 right-6  z-50 grid grid-rows-2 grid-cols-3 overflow-hidden rounded-2xl">
           <button onClick={toggle3DView} className=" bg-white w-12 h-12 z-50 border-gray-200 border-[1px] row-start-2 row-span-1 rounded-l-2xl col-span-1 col-start-1 "><FontAwesomeIcon className="text-xl" icon={faCube} /></button>
           <button onClick={() => rotateMap('left')} className="rounded-tl-2xl bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-2"><FontAwesomeIcon className="text-xl" icon={faRotateRight} /></button>
           <button onClick={() => rotateMap('right')} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-3"><FontAwesomeIcon className="text-xl" icon={faRotateLeft} /></button>
           <button onClick={() => handleZoom('out')} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-2"><FontAwesomeIcon className="text-xl" icon={faMagnifyingGlassMinus} /></button>
           <button onClick={() => handleZoom('in')} className="bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-3"><FontAwesomeIcon className="text-xl" icon={faMagnifyingGlassPlus} /></button>
         </div>
-      </>
     ))
   }
 

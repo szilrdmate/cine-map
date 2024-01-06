@@ -1,6 +1,6 @@
 // src/components/MapComponent.jsx
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleStyleLoad } from "../hooks/handleStyleLoad.js"
 import mapboxgl from 'mapbox-gl';
@@ -10,7 +10,7 @@ import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../redux/store.js";
 import MapControls from "./MapControls.jsx";
 
-// Mapbox token stored in as a .env variable
+// Mapbox token stored in a .env variable
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const MapComponent = () => {
@@ -18,6 +18,8 @@ const MapComponent = () => {
   const { type, coordinates } = useSelector((state) => state.city.location);
   const city = useSelector((state) => state.city.city);
   const selectedMovie = useSelector((state) => state.city.selectedMovie); // Use selected movie from Redux
+
+  const [isMapReady, setIsMapReady] = useState(false);
 
   // Refs for map container and map instance
   const mapContainerRef = useRef(null);
@@ -44,6 +46,7 @@ const MapComponent = () => {
     // Adding styling to the map
     map.current.on("style.load", () => {
       handleStyleLoad(map.current, movieLocations, dispatch);
+      setIsMapReady(true);
     });
 
     // Cleanup function to remove the map
@@ -83,7 +86,7 @@ const MapComponent = () => {
           onClose={() => dispatch(setSelectedMovie(null))}
         />
       )}
-      <MapControls map={map.curent}/>
+      {isMapReady && <MapControls map={map.current}/>}
     </div>
   );
 };
