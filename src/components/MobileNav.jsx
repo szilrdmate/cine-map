@@ -19,7 +19,6 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
     // Check if favoriteOpen is true, then dispatch the action
     if (favoriteOpen) {
       dispatch(setFavoriteOpen(false));
-      console.log('Favorite panel closed'); 
     }
   };
 

@@ -8,10 +8,10 @@ const Home = () => {
   const isDesktop = useMediaQuery( {query: '(min-width: 768px)'} );
 
   return (
-    <div>
+    <>
       <MapComponent />
       {isDesktop && (<Footer />)}
-    </div>
+    </>
   );
 };
 

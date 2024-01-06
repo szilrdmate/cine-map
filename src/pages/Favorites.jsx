@@ -1,6 +1,6 @@
 import FavoriteCards from "../components/FavoriteCards";
 
-// TODO: Fix movie card cropping and sizeing difference, and font, and padding on mobile view
+// TODO: Fix movie card cropping and sizing difference, and font, and padding on mobile view
 
 const Favorites = () => {
 

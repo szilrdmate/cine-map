@@ -36,7 +36,6 @@ const Navbar = () => {
       if (data.features && data.features.length > 0) {
         const coordinates = data.features[0].geometry.coordinates;
         if (coordinates) {
-          console.log('Going places')
           dispatch({
             type: "SET_COORDINATES",
             payload: { lng: coordinates[0], lat: coordinates[1] },

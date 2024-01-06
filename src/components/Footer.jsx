@@ -14,7 +14,6 @@ const Footer = () => {
   // Synchronize Redux state with local storage on component mount
   useEffect(() => {
     if (localFavorites.length > 0) {
-      console.log("Syncing local storage with Redux state:", localFavorites);
       dispatch(setFavorites(localFavorites));
     }
   }, [localFavorites, dispatch]);

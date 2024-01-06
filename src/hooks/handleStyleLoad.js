@@ -10,7 +10,6 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
   map.setConfigProperty("basemap", "showTransitLabels", false);
   // Set various configuration properties for the map
   if (isHandleStyleLoadExecuted) return;
-  console.log("Handling layer load");
   const imageName = "custom-marker";
 
   // Check if the image already exists on the map
@@ -20,7 +19,6 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
       // Add the image only if it's not already added
       if (!map.hasImage(imageName)) {
         map.addImage(imageName, image);
-        console.log("Marker image added");
       }
       if (!isSourceAndLayersAdded) {
         addSourceAndLayers(map, movieLocations);
@@ -32,7 +30,6 @@ export const handleStyleLoad = (map, movieLocations, dispatch) => {
     });
 
   setupEventListeners(map, dispatch);
-  console.log('Event listeners added')
 
   isHandleStyleLoadExecuted = true;
 };
@@ -99,7 +96,6 @@ const setupEventListeners = (map, dispatch) => {
   // Event handler for clicking on a cluster
 
     map.on("click", "clusters", (e) => {
-      console.log("Cluster click");
       const features = map.queryRenderedFeatures(e.point, {
         layers: ["clusters"],
       });
@@ -129,7 +125,6 @@ const setupEventListeners = (map, dispatch) => {
           geometry: feature.geometry,
           properties: feature.properties,
         };
-        console.log("Marker clicked, dispatching movie:", feature);
         dispatch(setSelectedMovie(serializableFeature));
       }
     });

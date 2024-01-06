@@ -9,6 +9,7 @@ import movieLocations from "../data/geoJson.json";
 import MovieCard from "./MovieCard";
 import { setSelectedMovie } from "../redux/store.js";
 import MapControls from "./MapControls.jsx";
+import { useMediaQuery } from "react-responsive";
 
 // Mapbox token stored in a .env variable
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -19,7 +20,11 @@ const MapComponent = () => {
   const city = useSelector((state) => state.city.city);
   const selectedMovie = useSelector((state) => state.city.selectedMovie); // Use selected movie from Redux
 
+  // UseState for map control timing
   const [isMapReady, setIsMapReady] = useState(false);
+
+  // Media query to detect desktop screen size
+  const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
 
   // Refs for map container and map instance
   const mapContainerRef = useRef(null);
@@ -32,8 +37,6 @@ const MapComponent = () => {
   useEffect(() => {
     // Initialize the map only if it's not already created
     if (map.current) return;
-
-    console.log("useEffect running");
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -51,7 +54,6 @@ const MapComponent = () => {
 
     // Cleanup function to remove the map
     return () => {
-      console.log("Removing map instance")
       if (map.current) {
         map.current.remove();
         map.current = null;
@@ -86,7 +88,7 @@ const MapComponent = () => {
           onClose={() => dispatch(setSelectedMovie(null))}
         />
       )}
-      {isMapReady && <MapControls map={map.current}/>}
+      {isDesktop && isMapReady && <MapControls map={map.current}/>}
     </div>
   );
 };
