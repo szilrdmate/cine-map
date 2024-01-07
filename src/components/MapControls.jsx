@@ -43,21 +43,21 @@ const MapControls = ({ map }) => {
 
   return (
     isDesktop && (
-      <div className="shadow-2xl absolute bottom-40 right-6 z-40 grid grid-rows-2 grid-cols-3 overflow-hidden rounded-2xl">
-        <button onClick={handleToggle3DView} className=" bg-white w-12 h-12 z-50 border-gray-200 border-[1px] row-start-2 row-span-1 rounded-l-2xl col-span-1 col-start-1 ">
-          <FontAwesomeIcon className="text-xl" icon={faCube} />
+      <div className="shadow-2xl absolute bottom-40 border-gray-200 border-[1px] right-6 z-40 grid grid-rows-2 grid-cols-2 overflow-hidden rounded-3xl">
+        <button onClick={handleRotateMapLeft} className="rounded-tl-2xl bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-1">
+          <FontAwesomeIcon className="text-lg text-gray-900" icon={faRotateRight} />
         </button>
-        <button onClick={handleRotateMapLeft} className="rounded-tl-2xl bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-2">
-          <FontAwesomeIcon className="text-xl" icon={faRotateRight} />
+        <button onClick={handleRotateMapRight} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-2">
+          <FontAwesomeIcon className="text-lg text-gray-900" icon={faRotateLeft} />
         </button>
-        <button onClick={handleRotateMapRight} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-1 row-span-1 col-span-1 col-start-3">
-          <FontAwesomeIcon className="text-xl" icon={faRotateLeft} />
+        <button onClick={handleZoomOut} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-1">
+          <FontAwesomeIcon className="text-lg text-gray-900" icon={faMagnifyingGlassMinus} />
         </button>
-        <button onClick={handleZoomOut} className=" bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-2">
-          <FontAwesomeIcon className="text-xl" icon={faMagnifyingGlassMinus} />
+        <button onClick={handleZoomIn} className="bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-2">
+          <FontAwesomeIcon className="text-lg text-gray-900" icon={faMagnifyingGlassPlus} />
         </button>
-        <button onClick={handleZoomIn} className="bg-white w-12 h-12 border-gray-200 border-[1px] row-start-2 row-span-1 col-span-1 col-start-3">
-          <FontAwesomeIcon className="text-xl" icon={faMagnifyingGlassPlus} />
+        <button onClick={handleToggle3DView} className="absolute left-7 top-7 rounded-full bg-white w-10 h-10 border-gray-200 border-[1px]">
+          <FontAwesomeIcon className="text-lg text-gray-900" icon={faCube} />
         </button>
       </div>
     )
