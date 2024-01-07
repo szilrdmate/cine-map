@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { removeFavoriteMovie, addFavoriteMovie } from '../redux/store';
 
 const FavoriteItem = ({ favorite }) => {
@@ -38,7 +38,7 @@ const FavoriteItem = ({ favorite }) => {
   return (
     <div className="bg-teal-950 rounded-xl shadow-2xl overflow-hidden relative text-white max-w-xs mx-auto">
       <button onClick={handleFavoriteClick} className="absolute top-2 left-2 z-10">
-        <FontAwesomeIcon icon={faStar} />
+        <FontAwesomeIcon icon={faHeart} />
       </button>
       {favorite.properties.imageUrl && (
         <img src={favorite.properties.imageUrl} alt={favorite.properties.title} className="w-full h-auto aspect-video object-cover" />

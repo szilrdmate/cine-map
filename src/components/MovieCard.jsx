@@ -2,8 +2,8 @@
 // src/components/MovieCards.jsx
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons'; // Import the regular star
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons'; // Import the solid star
+import { faHeart as regularStar } from '@fortawesome/free-regular-svg-icons'; // Import the regular star
+import { faHeart as solidStar } from '@fortawesome/free-solid-svg-icons'; // Import the solid star
 import { useState } from 'react';
 import { addFavoriteMovie, removeFavoriteMovie, setMapCoordinates } from '../redux/store';
 import "../styles/keyframes.css"
@@ -49,20 +49,20 @@ const MovieCard = ({ movie, onClose }) => {
   const animationClass = isClosing ? 'slide-out' : 'slide-in';
 
   return (
-    <div className={`movie-card ${animationClass} h-[495px] w-[240px] md:h-[unset] md:w-[unset] absolute max-w-[240px] md:m-[unset] -mt-[247px] -ml-[120px] top-[50%] left-[50%] md:top-[16%] md:translate-y-[-50%] md:left-12 text-white bg-teal-950 shadow-2xl z-20 rounded-xl overflow-hidden box-border md:max-w-[320px]`}>
-      <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
-      <button onClick={handleFavoriteClick} className="shadow-2xl close-btn absolute top-2 left-2 bg-none border-none text-xl cursor-pointer z-10"><FontAwesomeIcon icon={isFavorite ? solidStar : regularStar} /></button>
+    <div className={`movie-card ${animationClass} mx-4 md:h-[unset] md:w-[unset] absolute md:m-[unset] top-24 left-0 md:top-[16%] md:translate-y-[-50%] md:left-12 text-white bg-teal-950 shadow-2xl z-[200] rounded-xl overflow-hidden box-border md:max-w-[320px]`}>
+      <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-3 bg-none border-none text-2xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
+      <button onClick={handleFavoriteClick} className="shadow-2xl close-btn absolute top-2 left-3 bg-none border-none text-2xl cursor-pointer z-10"><FontAwesomeIcon icon={isFavorite ? solidStar : regularStar} /></button>
       <div>
         {movie.properties.imageUrl && (
-          <img src={movie.properties.imageUrl} alt={movie.properties.title} className="w-full h-auto max-w-[320px] aspect-video object-cover" />
+          <img src={movie.properties.imageUrl} alt={movie.properties.title} className="w-full h-auto aspect-video object-cover" />
         )}
       </div>
-      <div className='absolute top-0 left-0 max-w-[320px] w-full aspect-video bg-gradient-to-b from-black to-transparent opacity-50'></div>
+      <div className='absolute top-0 left-0 w-full aspect-video bg-gradient-to-b from-black to-transparent opacity-50'></div>
       <div className="pt-4 px-2">
         <h2 className="font-bold text-3xl mb-4">{movie.properties.title}</h2>
         <div>
           {movie.properties.locationImg && (
-            <img src={movie.properties.locationImg} alt={movie.properties.title} className="rounded-xl max-w-[304px] w-full h-48 mx-auto object-cover mb-4 shadow-xl" />
+            <img src={movie.properties.locationImg} alt={movie.properties.title} className="rounded-xl w-full h-48 mx-auto object-cover mb-4 shadow-xl" />
           )}
           <div className="flex justify-between font-medium">    
             <p className="text-sm">{movie.properties.name}</p>

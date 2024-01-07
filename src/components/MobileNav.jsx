@@ -24,7 +24,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
 
   return (
     <div id="mobile-nav">
-      <div className="flex items-center fixed z-20 pt-4 px-4 w-full">
+      <div className="flex items-center fixed z-[80] pt-4 px-4 w-full">
         <img
           src="./icon.svg"
           alt="icon"
@@ -52,7 +52,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
         </form>
       </div>
 
-      <div className="z-20 border-t-solid border-t-2 border-t-gray-300 fixed w-full h-20 bottom-0 left-0 text-4xl bg-white text-gray-900 flex justify-around md:hidden shadow-2xl  ">
+      <div className="z-[80] border-t-solid border-t-2 border-t-gray-300 fixed w-full h-20 bottom-0 left-0 text-4xl bg-white text-gray-900 flex justify-around md:hidden shadow-2xl  ">
         <Link to="/" onClick={handleMapLinkClick}>
           <div className="h-full w-[33vw] flex justify-center items-center">
             <FontAwesomeIcon icon={faGlobe} />

@@ -5,7 +5,7 @@ import FavoriteCards from "../components/FavoriteCards";
 const Favorites = () => {
 
     return (
-        <div className="w-screen min-h-screen bg-white bg-opacity-20 backdrop-blur-[20px] z-10 absolute top-0 left-0">
+        <div className="w-screen min-h-screen pb-10 md:pb-unset bg-teal-900 bg-opacity-60 backdrop-blur-[20px] z-50 absolute top-0 left-0">
             <FavoriteCards />
         </div>
     );
