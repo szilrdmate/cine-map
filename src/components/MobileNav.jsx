@@ -26,7 +26,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
     <div id="mobile-nav">
       <div className="flex items-center fixed z-[80] pt-4 px-4 w-full">
         <img
-          src="./icon.svg"
+          src="./icons/icon.svg"
           alt="icon"
           className="absolute left-7 h-10 z-20"
         />
@@ -46,7 +46,7 @@ const MobileNav = ({ searchQuery, handleSearchInputChange, handleSearchSubmit, i
           >
             <FontAwesomeIcon
               icon={faSearch}
-              className="text-3xl text-gray-700"
+              className="text-3xl text-red-600"
             />
           </button>
         </form>
