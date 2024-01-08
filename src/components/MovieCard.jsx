@@ -49,7 +49,13 @@ const MovieCard = ({ movie, onClose }) => {
   const animationClass = isClosing ? 'slide-out' : 'slide-in';
 
   return (
-    <div className={`movie-card ${animationClass} mx-4 md:h-[unset] md:w-[unset] absolute md:m-[unset] top-24 left-0 md:top-[16%] md:translate-y-[-50%] md:left-12 text-white bg-teal-950 shadow-2xl z-[200] rounded-xl overflow-hidden box-border md:max-w-[320px]`}>
+    <div className={`movie-card ${animationClass} absolute
+    
+    top-16 left-0 m-8 max-h-[570px] aspect-[172/277]
+
+    md:top-24 md:left-8 md:aspect-[9/14] md:max-w-[360px] md:m-0
+    
+    text-white bg-teal-950 shadow-2xl z-[200] rounded-xl overflow-hidden box-border`}>
       <button onClick={handleClose} className="shadow-2xl close-btn absolute top-2 right-3 bg-none border-none text-2xl cursor-pointer z-10"><FontAwesomeIcon icon={faXmark} /></button>
       <button onClick={handleFavoriteClick} className="shadow-2xl close-btn absolute top-2 left-3 bg-none border-none text-2xl cursor-pointer z-10"><FontAwesomeIcon icon={isFavorite ? solidStar : regularStar} /></button>
       <div>
@@ -62,7 +68,7 @@ const MovieCard = ({ movie, onClose }) => {
         <h2 className="font-bold text-3xl mb-4">{movie.properties.title}</h2>
         <div>
           {movie.properties.locationImg && (
-            <img src={movie.properties.locationImg} alt={movie.properties.title} className="rounded-xl w-full h-48 mx-auto object-cover mb-4 shadow-xl" />
+            <img src={movie.properties.locationImg} alt={movie.properties.title} className="rounded-xl w-full max-h-48 mx-auto object-cover mb-4 shadow-xl" />
           )}
           <div className="flex justify-between font-medium">    
             <p className="text-sm">{movie.properties.name}</p>
