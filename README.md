@@ -4,7 +4,7 @@ An interactive Map appliacation built for movie enthusiasts. Explore your favori
 
 **Check out the live demo at:** https://cinemap.vercel.app
 
-![Screenshot](/public/screenshot.png)
+![Demo](https://github.com/szilrdmate/cine-map/assets/147255010/a25eb173-edec-4bb0-870d-2a47728283fd)
 
 ## Project Overview
 
