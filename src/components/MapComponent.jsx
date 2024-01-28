@@ -40,7 +40,7 @@ const MapComponent = () => {
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/standard-beta",
+      style: "mapbox://styles/mapbox/standard",
       zoom: 14,
       pitch: 60,
       center: [2.29392, 48.85934],
